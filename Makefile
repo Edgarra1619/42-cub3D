@@ -10,6 +10,7 @@ TESTARGS =
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -gdwarf-4 $(INCFLAGS)
 INCFLAGS = -I $(INCDIR) -I $(LFTDIR)/include/ -I $(MLXDIR)
+MLXFLAGS = -lXext -lX11
 
 VALGFLAGS = --track-origins=yes --leak-check=full
 
@@ -32,7 +33,7 @@ fclean: clean
 re: clean all
 
 $(NAME): $(OBJS) $(LFT) $(MLX)
-	$(CC) $(CFLAGS) -o $@ $^
+	$(CC) $(CFLAGS) $(MLXFLAGS) -lm -o $@ $^
 
 $(OBJS): $(OBJDIR)%.o: $(SRCDIR)%.c
 	mkdir -p $(OBJDIR)
