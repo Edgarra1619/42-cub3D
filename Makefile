@@ -1,5 +1,5 @@
 NAME = cub3D
-SRCS = main.c
+SRCS = main.c render.c vector.c render_utils.c input.c
 INCDIR = ./include/
 SRCDIR = ./src/
 OBJDIR = ./obj/
@@ -7,8 +7,8 @@ LFTDIR = ./libft/
 MLXDIR = ./minilibx/
 TESTARGS = 
 
-CC = cc
-CFLAGS = -Wall -Wextra -Werror -gdwarf-4 $(INCFLAGS)
+CC = clang
+CFLAGS = -Wall -Wextra -gdwarf-4 $(INCFLAGS) -D MINIMAP_SIZE=10
 INCFLAGS = -I $(INCDIR) -I $(LFTDIR)/include/ -I $(MLXDIR)
 MLXFLAGS = -lXext -lX11
 
