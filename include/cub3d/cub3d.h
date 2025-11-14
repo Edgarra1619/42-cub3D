@@ -4,5 +4,8 @@
 # define READ_SIZE	1024
 # define MAP_MAX	1024
 # define ENTITY_MAX	128
+# define ERROR_MAX	1024
+
+int	print_error(const char *type, const char *msg);
 
 #endif
