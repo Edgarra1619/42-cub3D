@@ -1,5 +1,5 @@
 NAME = cub3D
-SRCS = main.c read.c error.c
+SRCS = main.c read.c error.c init.c parse.c
 INCDIR = ./include/
 SRCDIR = ./src/
 OBJDIR = ./obj/

@@ -10,7 +10,7 @@ enum e_cell
 	SPACE,
 	WALL,
 	ENTITY,
-	EMPTY,
+	PLAYER
 };
 
 enum e_entity
