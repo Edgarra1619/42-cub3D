@@ -1,4 +1,4 @@
-#include "libft.h"
+#include <libft.h>
 #include <cub3d/vector.h>
 #include <cub3d/types.h>
 #include <mlx_int.h>
@@ -25,6 +25,4 @@ void	draw_square(t_img *buffer, t_vec2 ul, t_vec2 dr, t_color color)
 		}
 		ul.y++;
 	}
-
-
 }
