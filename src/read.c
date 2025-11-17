@@ -3,7 +3,7 @@
 #include <unistd.h>
 #include <cub3d/cub3d.h>
 
-char	read_char(int fd, bool peek)
+char	read_char(const int fd, const bool peek)
 {
 	static char	buffer[READ_SIZE];
 	static int	size;
