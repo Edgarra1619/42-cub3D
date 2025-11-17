@@ -1,40 +1,43 @@
 #ifndef TYPES_H
 # define TYPES_H
 
-# ifndef MAP_MAX
-#  define MAP_MAX 1024
-# endif
-
-# ifndef ENTITY_MAX
-#  define ENTITY_MAX 64
-# endif
-
+# include <cub3d/defines.h>
 # include <mlx_int.h>
 # include <cub3d/vector.h>
 
-enum	e_std_colors
+enum e_cell
 {
-	RED = 0xFFFF0000,
-	GREEN = 0xFF00FF00,
-	BLUE = 0xFF0000FF,
-	YELLOW = 0xFFFFFF00,
-	WHITE = 0xFFFFFFFF,
-	BLACK = 0xFF000000,
+	SPACE,
+	WALL,
+	ENTITY,
+	PLAYER
 };
 
-enum	e_input
+enum e_entity
 {
-	KEYCODEW = 1 << 0,
-	KEYCODES = 1 << 1,
-	KEYCODEA = 1 << 2,
-	KEYCODED = 1 << 3,
-	KEYCODEQ = 1 << 4,
-	KEYCODEE = 1 << 5,
-	BUTTONL = 1 << 6,
-	BUTTONR = 1 << 7,
+	KEY,
+	DOOR,
 };
 
-typedef union u_color
+enum e_texture
+{
+	NORTH_WALL_TEX,
+	EAST_WALL_TEX,
+	SOUTH_WALL_TEX,
+	WEST_WALL_TEX,
+	KEY_TEX,
+	DOOR_TEX,
+	TEXTURE_COUNT,
+};
+
+enum e_color
+{
+	FLOOR_COL,
+	CEILING_COL,
+	COLOR_COUNT,
+};
+
+typedef union s_color
 {
 	struct
 	{
@@ -46,12 +49,6 @@ typedef union u_color
 	int				color;
 	unsigned int	ucolor;
 }	t_color;
-
-enum e_entity : char
-{
-	door,
-	key
-};
 
 typedef struct s_entity
 {
@@ -69,6 +66,8 @@ typedef struct s_player
 
 typedef struct s_scene
 {
+	t_img		*textures[TEXTURE_COUNT];
+	t_color		colors[COLOR_COUNT];
 	t_vec2		map_size;
 	char		map[MAP_MAX][MAP_MAX];
 	int			entity_count;
