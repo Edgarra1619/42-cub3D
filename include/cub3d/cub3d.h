@@ -6,7 +6,7 @@
 # include <mlx_int.h>
 
 
-void	render_minimap(t_img *buffer, t_scene *scene);
+void	render_minimap(t_minimap *minimap, t_scene *scene);
 int		print_error(const char *type, const char *msg);
 int		loop(t_data *data);
 int		init_scene(t_scene *const scene, const char *const file);

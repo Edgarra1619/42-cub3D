@@ -2,6 +2,7 @@
 #include <cub3d/hooks.h>
 #include <cub3d/types.h>
 #include <cub3d/vector.h>
+#include <cub3d/render.h>
 
 #include <libft.h>
 
@@ -14,7 +15,9 @@ void	init_mlx(t_data *data)
 {
 	data->display = mlx_init();
 	data->window = mlx_new_window(data->display, 512, 512, "testing");
-	data->buffer = mlx_new_image(data->display, 242, 242);
+	data->buffer = mlx_new_image(data->display, 512, 512);
+	data->minimap.buffer = mlx_new_image(data->display, 242, 242);
+	data->minimap.pixel_size = data->minimap.buffer->height / (MINIMAP_SIZE * 2);
 	mlx_hook(data->window, ButtonPress, ButtonPressMask, mouse_down_hook,
 		&(data->scene->player));
 	mlx_hook(data->window, ButtonRelease, ButtonReleaseMask, mouse_up_hook,
@@ -33,6 +36,7 @@ void	init_mlx(t_data *data)
 void	clean_mlx(t_data *data)
 {
 	mlx_destroy_image(data->display, data->buffer);
+	mlx_destroy_image(data->display, data->minimap.buffer);
 	mlx_destroy_window(data->display, data->window);
 	mlx_destroy_display(data->display);
 	free(data->display);

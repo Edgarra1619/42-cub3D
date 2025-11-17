@@ -43,12 +43,21 @@ typedef struct s_scene
 	t_player	player;
 }	t_scene;
 
+typedef struct s_minimap
+{
+	t_img	*buffer;
+	t_vec2	center;
+	t_vec2f	offset;
+	int		pixel_size;
+}	t_minimap;
+
 typedef struct s_data
 {
 	t_xvar		*display;
 	t_win_list	*window;
 	t_img		*buffer;
 	t_scene		*scene;
+	t_minimap	minimap;
 }	t_data;
 
 #endif
