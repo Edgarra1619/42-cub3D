@@ -1,3 +1,4 @@
+#include "cub3d/defines.h"
 #include <cub3d/cub3d.h>
 #include <cub3d/hooks.h>
 #include <cub3d/types.h>
@@ -35,6 +36,15 @@ void	init_mlx(t_data *data)
 
 void	clean_mlx(t_data *data)
 {
+	int	i;
+
+	i = 0;
+	while (i < TEXTURE_COUNT)
+	{
+		if (data->scene->textures[i])
+			mlx_destroy_image(data->display, data->scene->textures[i]);
+		i++;
+	}
 	mlx_destroy_image(data->display, data->buffer);
 	mlx_destroy_image(data->display, data->minimap.buffer);
 	mlx_destroy_window(data->display, data->window);
@@ -49,10 +59,14 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 		return (1);
-	init_scene(&scene, argv[1]);
-
 	data.scene = &scene;
 	init_mlx(&data);
+	if (init_scene(&scene, argv[1], data.display))
+	{
+		clean_mlx(&data);
+		return (1);
+	}
+
 	mlx_loop(data.display);
 	clean_mlx(&data);
 }
