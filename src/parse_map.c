@@ -21,7 +21,7 @@ int	parse_map(t_scene *const scene, const int fd)
 		if (cell == '\n')
 		{
 			if (pos.x == 0)
-				return (print_error(SECT_PARSE, ERR_EMPTY_LINE));
+				return (print_error(SECT_PARSE, ERR_MAP_LINE));
 			scene->map_size
 				= (t_vec2){ft_max(pos.x, scene->map_size.x), pos.y + 1};
 			pos = (t_vec2){0, pos.y + 1};

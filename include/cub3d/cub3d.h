@@ -3,7 +3,7 @@
 
 # include <cub3d/types.h>
 
-int	init_scene(t_scene *scene, const char *file);
+int	init_scene(t_scene *scene, const char *file, void *mlx);
 int	print_error(const char *type, const char *msg);
 
 #endif

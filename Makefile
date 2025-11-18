@@ -1,5 +1,6 @@
 NAME = cub3D
-SRCS = main.c read.c error.c init.c parse.c parse_map.c validate.c
+SRCS = main.c read.c error.c init.c parse.c parse_map.c parse_prop.c \
+	   validate.c
 INCDIR = ./include/
 SRCDIR = ./src/
 OBJDIR = ./obj/
