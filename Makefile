@@ -1,5 +1,5 @@
 NAME = cub3D
-SRCS =  main.c vector.c error.c init.c parse.c parse_map.c read.c validate.c
+SRCS =  main.c vector.c error.c init.c parse.c parse_prop.c parse_map.c read.c validate.c
 SRCS += loop.c input.c render.c render_utils.c
 INCDIR = ./include/
 SRCDIR = ./src/

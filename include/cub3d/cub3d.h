@@ -5,9 +5,8 @@
 # include <cub3d/vector.h>
 # include <mlx_int.h>
 
-
-void	render_minimap(t_minimap *minimap, t_scene *scene);
+int		init_scene(t_scene *scene, const char *file, void *mlx);
 int		print_error(const char *type, const char *msg);
+void	render_minimap(t_minimap *minimap, t_scene *scene);
 int		loop(t_data *data);
-int		init_scene(t_scene *const scene, const char *const file);
 #endif
