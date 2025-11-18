@@ -11,7 +11,7 @@ enum e_cell
 	SPACE,
 	WALL,
 	ENTITY,
-	PLAYER
+	PLAYER,
 };
 
 enum e_entity

@@ -3,6 +3,8 @@
 #include <unistd.h>
 #include <cub3d/cub3d.h>
 
+static inline void	skip_spaces(int fd);
+
 char	read_char(const int fd, const bool peek)
 {
 	static char	buffer[READ_SIZE];
@@ -19,4 +21,52 @@ char	read_char(const int fd, const bool peek)
 	if (peek)
 		return (buffer[pos]);
 	return (buffer[pos++]);
+}
+
+int	read_value(const int fd, char *const dest, const int size)
+{
+	int		i;
+	char	c;
+
+	skip_spaces(fd);
+	i = 0;
+	while (true)
+	{
+		c = read_char(fd, true);
+		if (c == ' ' || c == '\n' || c == EOF)
+		{
+			dest[i] = '\0';
+			return (0);
+		}
+		if (i >= size - 1)
+			return (1);
+		dest[i++] = read_char(fd, false);
+	}
+}
+
+int	read_line(const int fd, char *const dest, const int size)
+{
+	int		i;
+	char	c;
+
+	skip_spaces(fd);
+	i = 0;
+	while (true)
+	{
+		c = read_char(fd, false);
+		if (c == '\n' || c == EOF)
+		{
+			dest[i] = '\0';
+			return (0);
+		}
+		if (i >= size - 1)
+			return (1);
+		dest[i++] = c;
+	}
+}
+
+static inline void	skip_spaces(const int fd)
+{
+	while (read_char(fd, true) == ' ')
+		read_char(fd, false);
 }
