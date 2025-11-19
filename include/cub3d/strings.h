@@ -10,6 +10,7 @@
 # define ERR_DUP_PROP	"duplicate property"
 # define ERR_INV_PROP	"invalid property"
 # define ERR_INV_TEX	"invalid texture"
+# define ERR_TEX_SIZE	"texture width must be multiple of height"
 # define ERR_INV_COL	"invalid color"
 # define ERR_INV_CELL	"invalid map character"
 # define ERR_MAP_LINE	"empty map line"
