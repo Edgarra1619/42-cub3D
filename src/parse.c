@@ -1,4 +1,5 @@
 #include <libft.h>
+#include <cub3d/defines.h>
 #include <cub3d/parse.h>
 
 char	get_prop_type(const char *const id)
@@ -36,7 +37,6 @@ char	get_color_id(const char *const id)
 		return (CEILING_COL);
 	return (-1);
 }
-
 char	get_cell_type(const char cell)
 {
 	if (cell == '0')

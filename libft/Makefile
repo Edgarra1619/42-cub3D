@@ -26,7 +26,7 @@ INCDIR = ./include/
 SRCDIR = ./src/
 OBJDIR = ./obj/
 
-CC = cc
+CC = clang
 CFLAGS = -Wall -Wextra -Werror -I $(INCDIR)
 AR = ar
 ARFLAGS = rc

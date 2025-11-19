@@ -4,6 +4,8 @@
 #include <cub3d/strings.h>
 #include <cub3d/parse.h>
 
+#include <fcntl.h>
+
 static int			init_assets(t_scene *scene, int fd, void *mlx);
 static int			init_map(t_scene *scene, int fd);
 static inline void		skip_empty_lines(int fd);

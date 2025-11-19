@@ -1,15 +1,15 @@
 NAME = cub3D
-SRCS = main.c read.c error.c init.c parse.c parse_map.c parse_prop.c \
-	   validate.c
+SRCS =  main.c vector.c error.c init.c parse.c parse_prop.c parse_map.c read.c validate.c
+SRCS += loop.c input.c render.c render_utils.c
 INCDIR = ./include/
 SRCDIR = ./src/
 OBJDIR = ./obj/
 LFTDIR = ./libft/
 MLXDIR = ./minilibx/
-TESTARGS = 
+TESTARGS = ./maps/test.cub
 
-CC = cc
-CFLAGS = -Wall -Wextra -Werror -gdwarf-4 $(INCFLAGS)
+CC = clang
+CFLAGS = -Wall -Wextra -gdwarf-4 $(INCFLAGS) -D MINIMAP_SIZE=10
 INCFLAGS = -I $(INCDIR) -I $(LFTDIR)/include/ -I $(MLXDIR)
 MLXFLAGS = -lXext -lX11
 
@@ -55,10 +55,10 @@ gprof: $(NAME)
 	gprof $(NAME) > gprof-output
 
 valgrind: $(NAME)
-	valgrind $(VALGFLAGS) ./$(NAME)
+	valgrind $(VALGFLAGS) ./$(NAME) $(TESTARGS)
 
 gdb: $(NAME)
-	gdbtui $(NAME)
+	gdbtui --args $(NAME) $(TESTARGS)
 
 vgdb: $(NAME)
-	valgrind $(VALGFLAGS) --vgdb=full --vgdb-error=0 ./$(NAME)
+	valgrind $(VALGFLAGS) --vgdb=full --vgdb-error=0 ./$(NAME) $(TESTARGS)

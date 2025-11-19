@@ -1,8 +1,8 @@
 #ifndef TYPES_H
 # define TYPES_H
 
-# include <mlx_int.h>
 # include <cub3d/defines.h>
+# include <mlx_int.h>
 # include <cub3d/vector.h>
 
 typedef union s_color
@@ -14,10 +14,10 @@ typedef union s_color
 		unsigned char	r;
 		unsigned char	a;
 	};
-	unsigned int	color;
+	int				color;
+	unsigned int	ucolor;
 }	t_color;
 
-// TODO: add entity-specific members
 typedef struct s_entity
 {
 	enum e_entity	type;
@@ -29,6 +29,7 @@ typedef struct s_player
 	t_vec2f	pos;
 	t_vec2f	dir;
 	int		keys_held;
+	t_vec2		mouse_pos;
 }	t_player;
 
 typedef struct s_scene
@@ -41,5 +42,22 @@ typedef struct s_scene
 	t_entity	entities[ENTITY_MAX];
 	t_player	player;
 }	t_scene;
+
+typedef struct s_minimap
+{
+	t_img	*buffer;
+	t_vec2	center;
+	t_vec2f	offset;
+	int		pixel_size;
+}	t_minimap;
+
+typedef struct s_data
+{
+	t_xvar		*display;
+	t_win_list	*window;
+	t_img		*buffer;
+	t_scene		*scene;
+	t_minimap	minimap;
+}	t_data;
 
 #endif
