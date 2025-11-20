@@ -1,6 +1,7 @@
-#include <libft.h>
 #include <cub3d/defines.h>
 #include <cub3d/parse.h>
+
+#include <libft.h>
 
 char	get_prop_type(const char *const id)
 {

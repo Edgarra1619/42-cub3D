@@ -1,10 +1,11 @@
-#include <errno.h>
-#include <libft.h>
 #include <cub3d/cub3d.h>
 #include <cub3d/strings.h>
 #include <cub3d/parse.h>
 
+#include <libft.h>
+
 #include <fcntl.h>
+#include <errno.h>
 
 static int			init_assets(t_scene *scene, int fd, void *mlx);
 static int			init_map(t_scene *scene, int fd);

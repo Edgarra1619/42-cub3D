@@ -1,6 +1,8 @@
 #include <cub3d/vector.h>
 #include <cub3d/types.h>
+
 #include <mlx.h>
+
 #include <X11/keysym.h>
 
 //needs to receive t_data to close the loop

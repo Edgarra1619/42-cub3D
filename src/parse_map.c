@@ -1,7 +1,8 @@
-#include <libft.h>
 #include <cub3d/cub3d.h>
 #include <cub3d/strings.h>
 #include <cub3d/parse.h>
+
+#include <libft.h>
 
 static int	parse_cell(char cell, t_vec2 pos, t_scene *scene);
 static int	parse_entity(char cell, t_vec2 pos, t_scene *scene);

@@ -14,7 +14,7 @@
 #  define ENTITY_MAX	64
 # endif
 
-//here for testing purposes
+// INFO: here for testing purposes
 enum	e_std_colors
 {
 	RED = 0xFFFF0000,

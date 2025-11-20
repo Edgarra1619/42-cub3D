@@ -1,10 +1,12 @@
 #include <cub3d/defines.h>
 #include <cub3d/types.h>
 #include <cub3d/render.h>
-#include <libft.h>
 #include <cub3d/vector.h>
-#include <mlx.h>
+
+#include <libft.h>
+
 #include <mlx_int.h>
+#include <mlx.h>
 
 static int	get_celltype (t_scene *scene, t_vec2 pos)
 {

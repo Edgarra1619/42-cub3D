@@ -1,7 +1,8 @@
+#include <cub3d/cub3d.h>
+
 #include <stdbool.h>
 #include <stdio.h>
 #include <unistd.h>
-#include <cub3d/cub3d.h>
 
 static inline void	skip_spaces(int fd);
 

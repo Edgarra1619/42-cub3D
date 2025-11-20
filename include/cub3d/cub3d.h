@@ -3,6 +3,7 @@
 
 # include <cub3d/types.h>
 # include <cub3d/vector.h>
+
 # include <mlx_int.h>
 
 int		init_scene(t_scene *scene, const char *file, void *mlx);

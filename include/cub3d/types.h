@@ -2,8 +2,9 @@
 # define TYPES_H
 
 # include <cub3d/defines.h>
-# include <mlx_int.h>
 # include <cub3d/vector.h>
+
+# include <mlx_int.h>
 
 typedef union s_color
 {
@@ -18,6 +19,7 @@ typedef union s_color
 	unsigned int	ucolor;
 }	t_color;
 
+// TODO: add entity-specific members
 typedef struct s_entity
 {
 	enum e_entity	type;

@@ -1,10 +1,13 @@
-#include <limits.h>
-#include <errno.h>
-#include <libft.h>
-#include <mlx.h>
 #include <cub3d/cub3d.h>
 #include <cub3d/parse.h>
 #include <cub3d/strings.h>
+
+#include <libft.h>
+
+#include <mlx.h>
+
+#include <limits.h>
+#include <errno.h>
 
 static int	parse_texture(const char *id, t_scene *scene, int fd, void *mlx);
 static int	parse_color(const char *id, t_scene *scene, int fd);

@@ -1,7 +1,9 @@
-#include <errno.h>
-#include <libft.h>
 #include <cub3d/cub3d.h>
 #include <cub3d/strings.h>
+
+#include <libft.h>
+
+#include <errno.h>
 
 static void	buffer_error(const char *str);
 
