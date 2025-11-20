@@ -7,23 +7,34 @@
 
 #include <mlx.h>
 
-void	update_dir(t_player *const player, const float delta)
-{
-	static const float	speed = 0.25f;
-	const int			keys_held = player->keys_held;
+#include <math.h>
 
+void	update_dir(t_player *const player, float delta)
+{
+	static const float	speed = M_PI_4 / 4;
+	const t_vec2f		dir = player->dir;
+	const int			keys_held = player->keys_held
+		& (KEYCODELEFT | KEYCODERIGHT);
+	float				theta;
+
+	if (!keys_held)
+		return ;
 	if (keys_held & KEYCODELEFT)
-		player->dir_angle -= speed * delta;
+		theta = -speed * delta;
 	if (keys_held & KEYCODERIGHT)
-		player->dir_angle += speed * delta;
-	player->dir = angle_to_vec2f(player->dir_angle);
+		theta = speed * delta;
+	player->dir = (t_vec2f){
+		cos(theta) * dir.x - sin(theta) * dir.y,
+		sin(theta) * dir.x + cos(theta) * dir.y
+	};
 }
 
 void	update_pos(t_player *const player, const float delta)
 {
-	const t_vec2f	dir = mult_vec2ff(player->dir, delta);
-	const int		keys_held = player->keys_held;
-	t_vec2f			pos;
+	static const float	speed = 0.5f;
+	const t_vec2f		dir = mult_vec2ff(player->dir, speed * delta);
+	const int			keys_held = player->keys_held;
+	t_vec2f				pos;
 
 	pos = player->pos;
 	if (keys_held & KEYCODEW)

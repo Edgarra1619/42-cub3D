@@ -30,7 +30,6 @@ typedef struct s_player
 {
 	t_vec2f	pos;
 	t_vec2f	dir;
-	float	dir_angle;
 	int		keys_held;
 	t_vec2	mouse_pos;
 }	t_player;

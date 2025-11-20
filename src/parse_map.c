@@ -78,14 +78,13 @@ static int	parse_player(
 		return (print_error(SECT_PARSE, ERR_MUL_SPAWN));
 	player->pos = (t_vec2f){pos.x + 0.5f, pos.y + 0.5f};
 	if (cell == 'N')
-		player->dir_angle = M_PI_2;
+		player->dir = (t_vec2f){0, 1};
 	else if (cell == 'S')
-		player->dir_angle = M_PI + M_PI_2;
+		player->dir = (t_vec2f){0, -1};
 	else if (cell == 'W')
-		player->dir_angle = M_PI;
+		player->dir = (t_vec2f){-1, 0};
 	else if (cell == 'E')
-		player->dir_angle = 0;
-	player->dir = angle_to_vec2f(player->dir_angle);
+		player->dir = (t_vec2f){1, 0};
 	player->keys_held = 0;
 	return (0);
 }

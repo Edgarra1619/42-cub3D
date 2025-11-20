@@ -27,6 +27,5 @@ typedef struct s_vec2f
 t_vec2f	sum_vec2f(const t_vec2f a, const t_vec2f b);
 t_vec2f	mult_vec2ff(const t_vec2f a, const float b);
 t_vec2f	norm_vec2f(const t_vec2f vec);
-t_vec2f	angle_to_vec2f(const float angle);
 
 #endif

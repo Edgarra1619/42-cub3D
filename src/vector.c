@@ -28,8 +28,3 @@ t_vec2f	norm_vec2f(const t_vec2f vec)
 
 	return ((t_vec2f){vec.x / mag, vec.y / mag});
 }
-
-t_vec2f	angle_to_vec2f(const float angle)
-{
-	return ((t_vec2f){cosf(angle), sinf(angle)});
-}
