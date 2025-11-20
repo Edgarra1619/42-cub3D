@@ -5,7 +5,7 @@
 
 #include <X11/keysym.h>
 
-//needs to receive t_data to close the loop
+// INFO: needs to receive t_data to close the loop
 int	keyboard_up_hook(int keycode, t_data *data)
 {
 	if (keycode == XK_Escape)
@@ -22,6 +22,10 @@ int	keyboard_up_hook(int keycode, t_data *data)
 		data->scene->player.keys_held &= ~KEYCODEQ;
 	if (keycode == 'e')
 		data->scene->player.keys_held &= ~KEYCODEE;
+	if (keycode == XK_Left)
+		data->scene->player.keys_held &= ~KEYCODELEFT;
+	if (keycode == XK_Right)
+		data->scene->player.keys_held &= ~KEYCODERIGHT;
 	return (0);
 }
 
@@ -39,6 +43,10 @@ int	keyboard_down_hook(int keycode, t_player *player)
 		player->keys_held |= KEYCODEQ;
 	if (keycode == 'e')
 		player->keys_held |= KEYCODEE;
+	if (keycode == XK_Left)
+		player->keys_held |= KEYCODELEFT;
+	if (keycode == XK_Right)
+		player->keys_held |= KEYCODERIGHT;
 	return (0);
 }
 

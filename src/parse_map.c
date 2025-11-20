@@ -4,6 +4,8 @@
 
 #include <libft.h>
 
+#include <math.h>
+
 static int	parse_cell(char cell, t_vec2 pos, t_scene *scene);
 static int	parse_entity(char cell, t_vec2 pos, t_scene *scene);
 static int	parse_player(char cell, t_vec2 pos, t_player *player);
@@ -72,20 +74,18 @@ static int	parse_entity(
 static int	parse_player(
 	const char cell, const t_vec2 pos, t_player *const player)
 {
-	t_vec2f	dir;
-
 	if (player->pos.x != -1.0f)
 		return (print_error(SECT_PARSE, ERR_MUL_SPAWN));
-	if (cell == 'N')
-		dir = (t_vec2f){0, 1.0f};
-	else if (cell == 'E')
-		dir = (t_vec2f){1.0f, 0};
-	else if (cell == 'S')
-		dir = (t_vec2f){0, -1.0f};
-	else
-		dir = (t_vec2f){-1.0f, 0};
 	player->pos = (t_vec2f){pos.x + 0.5f, pos.y + 0.5f};
-	player->dir = dir;
+	if (cell == 'N')
+		player->dir_angle = M_PI_2;
+	else if (cell == 'S')
+		player->dir_angle = M_PI + M_PI_2;
+	else if (cell == 'W')
+		player->dir_angle = M_PI;
+	else if (cell == 'E')
+		player->dir_angle = 0;
+	player->dir = angle_to_vec2f(player->dir_angle);
 	player->keys_held = 0;
 	return (0);
 }

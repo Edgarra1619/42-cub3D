@@ -33,8 +33,10 @@ enum	e_input
 	KEYCODED = 1 << 3,
 	KEYCODEQ = 1 << 4,
 	KEYCODEE = 1 << 5,
-	BUTTONL = 1 << 6,
-	BUTTONR = 1 << 7,
+	KEYCODELEFT = 1 << 6,
+	KEYCODERIGHT = 1 << 7,
+	BUTTONL = 1 << 8,
+	BUTTONR = 1 << 9,
 };
 
 enum e_cell
