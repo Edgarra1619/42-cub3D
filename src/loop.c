@@ -9,20 +9,18 @@
 
 #include <math.h>
 
-void	update_dir(t_player *const player, float delta)
+void	update_dir(t_player *const player, const float delta)
 {
 	static const float	speed = M_PI_4 / 4;
 	const t_vec2f		dir = player->dir;
-	const int			keys_held = player->keys_held
-		& (KEYCODELEFT | KEYCODERIGHT);
+	const int			keys_held = player->keys_held;
 	float				theta;
 
-	if (!keys_held)
-		return ;
+	theta = 0;
 	if (keys_held & KEYCODELEFT)
-		theta = -speed * delta;
+		theta -= speed * delta;
 	if (keys_held & KEYCODERIGHT)
-		theta = speed * delta;
+		theta += speed * delta;
 	player->dir = (t_vec2f){
 		cos(theta) * dir.x - sin(theta) * dir.y,
 		sin(theta) * dir.x + cos(theta) * dir.y
