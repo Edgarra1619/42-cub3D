@@ -24,7 +24,7 @@ t_vec2f	mult_vec2ff(const t_vec2f a, const float b)
 
 t_vec2f	norm_vec2f(const t_vec2f vec)
 {
-	const float	mag = sqrt(pow(vec.x, 2) + pow(vec.y, 2));
+	const float	mag = sqrtf(powf(vec.x, 2) + powf(vec.y, 2));
 
 	return ((t_vec2f){vec.x / mag, vec.y / mag});
 }
