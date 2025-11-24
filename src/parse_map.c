@@ -4,8 +4,6 @@
 
 #include <libft.h>
 
-#include <math.h>
-
 static int	parse_cell(char cell, t_vec2 pos, t_scene *scene);
 static int	parse_entity(char cell, t_vec2 pos, t_scene *scene);
 static int	parse_player(char cell, t_vec2 pos, t_player *player);

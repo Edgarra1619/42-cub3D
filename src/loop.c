@@ -2,6 +2,7 @@
 #include <cub3d/defines.h>
 #include <cub3d/types.h>
 #include <cub3d/vector.h>
+#include <cub3d/collision.h>
 
 #include <libft.h>
 
@@ -12,7 +13,6 @@
 void	update_dir(t_player *const player, const float delta)
 {
 	static const float	speed = M_PI_4 / 4;
-	const t_vec2f		dir = player->dir;
 	const int			keys_held = player->keys_held;
 	float				theta;
 
@@ -21,29 +21,39 @@ void	update_dir(t_player *const player, const float delta)
 		theta -= speed * delta;
 	if (keys_held & KEYCODERIGHT)
 		theta += speed * delta;
-	player->dir = (t_vec2f){
-		cos(theta) * dir.x - sin(theta) * dir.y,
-		sin(theta) * dir.x + cos(theta) * dir.y
-	};
+	player->dir = rot_vec2ff(player->dir, theta);
 }
 
-void	update_pos(t_player *const player, const float delta)
+t_vec2f	get_target_dir(t_player *const player)
 {
-	static const float	speed = 0.5f;
-	const t_vec2f		dir = mult_vec2ff(player->dir, speed * delta);
-	const int			keys_held = player->keys_held;
-	t_vec2f				pos;
+	const t_vec2f	dir = player->dir;
+	const int		keys_held = player->keys_held;
+	t_vec2f			target_dir;
 
-	pos = player->pos;
+	target_dir = (t_vec2f){0};
 	if (keys_held & KEYCODEW)
-		pos = sum_vec2f(pos, (t_vec2f){-dir.x, -dir.y});
+		target_dir = sum_vec2f(target_dir, (t_vec2f){-dir.x, -dir.y});
 	if (keys_held & KEYCODES)
-		pos = sum_vec2f(pos, dir);
+		target_dir = sum_vec2f(target_dir, dir);
 	if (keys_held & KEYCODEA)
-		pos = sum_vec2f(pos, (t_vec2f){-dir.y, dir.x});
+		target_dir = sum_vec2f(target_dir, (t_vec2f){-dir.y, dir.x});
 	if (keys_held & KEYCODED)
-		pos = sum_vec2f(pos, (t_vec2f){dir.y, -dir.x});
-	player->pos = pos;
+		target_dir = sum_vec2f(target_dir, (t_vec2f){dir.y, -dir.x});
+	return (norm_vec2f(target_dir));
+}
+
+void	update_pos(t_scene *const scene, const float delta)
+{
+	static const float	speed = 0.25f;
+	const t_vec2f		pos = scene->player.pos;
+	const t_vec2f		target_dir = get_target_dir(&scene->player);
+	const t_vec2f		target_pos
+		= sum_vec2f(pos, mult_vec2ff(target_dir, speed * delta));
+
+	if (!check_map_coll((t_vec2f){target_pos.x, pos.y}, scene))
+		scene->player.pos.x = target_pos.x;
+	if (!check_map_coll((t_vec2f){pos.x, target_pos.y}, scene))
+		scene->player.pos.y = target_pos.y;
 }
 
 // INFO: returns 1 when interacting
@@ -54,7 +64,7 @@ char	treat_input(t_scene *const scene, const float delta)
 	if (keys_held & (KEYCODELEFT | KEYCODERIGHT))
 		update_dir(&scene->player, delta);
 	if (keys_held & (KEYCODEW | KEYCODES | KEYCODEA | KEYCODED))
-		update_pos(&scene->player, delta);
+		update_pos(scene, delta);
 	return (keys_held & BUTTONL);
 }
 
