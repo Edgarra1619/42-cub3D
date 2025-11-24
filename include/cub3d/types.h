@@ -6,6 +6,8 @@
 
 # include <mlx_int.h>
 
+# include <stdbool.h>
+
 typedef union s_color
 {
 	struct
@@ -19,11 +21,12 @@ typedef union s_color
 	unsigned int	ucolor;
 }	t_color;
 
-// TODO: add entity-specific members
 typedef struct s_entity
 {
 	enum e_entity	type;
 	t_vec2			pos;
+	bool			open;
+	bool			unlocked;
 }	t_entity;
 
 typedef struct s_player
@@ -32,6 +35,7 @@ typedef struct s_player
 	t_vec2f	dir;
 	int		keys_held;
 	t_vec2	mouse_pos;
+	int		key_count;
 }	t_player;
 
 typedef struct s_scene

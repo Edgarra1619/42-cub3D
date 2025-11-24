@@ -83,6 +83,5 @@ static int	parse_player(
 		player->dir = (t_vec2f){-1, 0};
 	else if (cell == 'E')
 		player->dir = (t_vec2f){1, 0};
-	player->keys_held = 0;
 	return (0);
 }

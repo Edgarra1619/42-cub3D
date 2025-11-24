@@ -3,8 +3,6 @@
 
 # include <cub3d/types.h>
 
-# include <stdbool.h>
-
 # define PROP_SIZE	3
 # define COLOR_SIZE	12
 
