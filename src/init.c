@@ -1,17 +1,52 @@
 #include <cub3d/cub3d.h>
 #include <cub3d/strings.h>
+#include <cub3d/render.h>
+#include <cub3d/hooks.h>
 #include <cub3d/parse.h>
 
 #include <libft.h>
 
-#include <fcntl.h>
+#include <mlx.h>
+
 #include <errno.h>
 
-static int			init_assets(t_scene *scene, int fd, void *mlx);
-static int			init_map(t_scene *scene, int fd);
-static inline void		skip_empty_lines(int fd);
+static void	init_mlx(t_data *data);
+static int	init_scene(t_scene *scene, const char *file, void *mlx);
+static int	init_assets(t_scene *scene, int fd, void *mlx);
+static int	init_map(t_scene *scene, int fd);
 
-int	init_scene(t_scene *const scene, const char *const file, void *const mlx)
+int	init(t_data *const data, const char *const file)
+{
+	init_mlx(data);
+	return (init_scene(&data->scene, file, data->display));
+}
+
+// TODO: protect allocs
+static void	init_mlx(t_data *const data)
+{
+	data->display = mlx_init();
+	data->window = mlx_new_window(data->display, 512, 512, "cub3D");
+	data->buffer = mlx_new_image(data->display, 512, 512);
+	data->minimap.buffer = mlx_new_image(data->display, 242, 242);
+	data->minimap.pixel_size
+		= data->minimap.buffer->height / (MINIMAP_SIZE * 2);
+	mlx_hook(data->window, ButtonPress, ButtonPressMask, mouse_down_hook,
+		&(data->scene.player));
+	mlx_hook(data->window, ButtonRelease, ButtonReleaseMask, mouse_up_hook,
+		&(data->scene.player));
+	mlx_hook(data->window, MotionNotify, ButtonMotionMask, mouse_move_hook,
+		&(data->scene.player));
+	mlx_hook(data->window, KeyPress, KeyPressMask, keyboard_down_hook,
+		&(data->scene.player));
+	mlx_hook(data->window, KeyRelease, KeyReleaseMask, keyboard_up_hook,
+		data);
+	mlx_loop_hook(data->display, loop, data);
+	mlx_hook(data->window, ClientMessage, LeaveWindowMask, mlx_loop_end,
+		data->display);
+}
+
+static int	init_scene(
+	t_scene *const scene, const char *const file, void *const mlx)
 {
 	const int	fd = open(file, O_RDONLY);
 
@@ -46,10 +81,4 @@ static int	init_map(t_scene *const scene, const int fd)
 	if (parse_map(scene, fd) || validate_map(scene))
 		return (1);
 	return (0);
-}
-
-static inline void	skip_empty_lines(const int fd)
-{
-	while (read_char(fd, true) == '\n')
-		read_char(fd, false);
 }

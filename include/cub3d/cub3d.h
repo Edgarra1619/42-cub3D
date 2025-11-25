@@ -2,12 +2,10 @@
 # define CUB3D_H
 
 # include <cub3d/types.h>
-# include <cub3d/vector.h>
 
-# include <mlx_int.h>
-
-int		init_scene(t_scene *scene, const char *file, void *mlx);
-int		print_error(const char *type, const char *msg);
-void	render_minimap(t_minimap *minimap, t_scene *scene);
+int		init(t_data *data, const char *file);
 int		loop(t_data *data);
+void	render_minimap(t_minimap *minimap, t_scene *scene);
+int		print_error(const char *type, const char *msg);
+
 #endif

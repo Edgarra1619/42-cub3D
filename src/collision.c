@@ -1,4 +1,4 @@
-#include <cub3d/collision.h>
+#include <cub3d/game.h>
 
 static t_box	get_box(t_vec2f pos, float size);
 static t_box	get_cell_box(t_vec2 cell, float size);

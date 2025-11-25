@@ -66,6 +66,12 @@ int	read_line(const int fd, char *const dest, const int size)
 	}
 }
 
+void	skip_empty_lines(const int fd)
+{
+	while (read_char(fd, true) == '\n')
+		read_char(fd, false);
+}
+
 static inline void	skip_spaces(const int fd)
 {
 	while (read_char(fd, true) == ' ')

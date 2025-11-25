@@ -38,6 +38,7 @@ char	get_color_id(const char *const id)
 		return (CEILING_COL);
 	return (-1);
 }
+
 char	get_cell_type(const char cell)
 {
 	if (cell == '0')

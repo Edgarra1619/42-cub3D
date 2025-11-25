@@ -11,21 +11,21 @@ int	keyboard_up_hook(int keycode, t_data *data)
 	if (keycode == XK_Escape)
 		mlx_loop_end(data->display);
 	if (keycode == 'w')
-		data->scene->player.keys_held &= ~KEYCODEW;
+		data->scene.player.keys_held &= ~KEYCODEW;
 	if (keycode == 's')
-		data->scene->player.keys_held &= ~KEYCODES;
+		data->scene.player.keys_held &= ~KEYCODES;
 	if (keycode == 'a')
-		data->scene->player.keys_held &= ~KEYCODEA;
+		data->scene.player.keys_held &= ~KEYCODEA;
 	if (keycode == 'd')
-		data->scene->player.keys_held &= ~KEYCODED;
+		data->scene.player.keys_held &= ~KEYCODED;
 	if (keycode == 'q')
-		data->scene->player.keys_held &= ~KEYCODEQ;
+		data->scene.player.keys_held &= ~KEYCODEQ;
 	if (keycode == 'e')
-		data->scene->player.keys_held &= ~KEYCODEE;
+		data->scene.player.keys_held &= ~KEYCODEE;
 	if (keycode == XK_Left)
-		data->scene->player.keys_held &= ~KEYCODELEFT;
+		data->scene.player.keys_held &= ~KEYCODELEFT;
 	if (keycode == XK_Right)
-		data->scene->player.keys_held &= ~KEYCODERIGHT;
+		data->scene.player.keys_held &= ~KEYCODERIGHT;
 	return (0);
 }
 
@@ -72,11 +72,12 @@ int	mouse_down_hook(int button, t_vec3 pos, t_player *player)
 
 int	mouse_move_hook(int x, int y, t_player *player)
 {
-	// const t_vecf2	mov = (t_vecf2)
-	// {(float)(state->mouse_pos.x - pos.x) / 10,
-	// 	(float)(state->mouse_pos.y - pos.y) / 10};
-
-	// rotate_camera(player->camera, mov);
+	//const t_vecf2	mov = (t_vecf2) {
+	//	(float)(state->mouse_pos.x - pos.x) / 10,
+	//	(float)(state->mouse_pos.y - pos.y) / 10
+	//};
+	//
+	//rotate_camera(player->camera, mov);
 	player->mouse_pos = (t_vec2){x, y};
 	return (0);
 }

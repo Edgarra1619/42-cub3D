@@ -23,5 +23,6 @@ char	get_entity_type(char cell);
 char	read_char(int fd, bool peek);
 int		read_value(int fd, char *dest, int size);
 int		read_line(int fd, char *dest, int size);
+void	skip_empty_lines(int fd);
 
 #endif

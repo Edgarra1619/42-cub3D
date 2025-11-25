@@ -62,7 +62,7 @@ typedef struct s_data
 	t_xvar		*display;
 	t_win_list	*window;
 	t_img		*buffer;
-	t_scene		*scene;
+	t_scene		scene;
 	t_minimap	minimap;
 }	t_data;
 
