@@ -8,11 +8,11 @@
 
 #include <mlx.h>
 
-#include <math.h>
+#include <sys/time.h>
 
 void	update_dir(t_player *const player, const float delta)
 {
-	static const float	speed = M_PI_4 / 4;
+	static const float	speed = 0.005f;
 	const int			keys_held = player->keys_held;
 	float				theta;
 
@@ -44,7 +44,7 @@ t_vec2f	get_target_dir(t_player *const player)
 
 void	update_pos(t_scene *const scene, const float delta)
 {
-	static const float	speed = 0.25f;
+	static const float	speed = 0.005f;
 	const t_vec2f		pos = scene->player.pos;
 	const t_vec2f		target_dir = get_target_dir(&scene->player);
 	const t_vec2f		target_pos
@@ -68,9 +68,27 @@ char	treat_input(t_scene *const scene, const float delta)
 	return (keys_held & BUTTONL);
 }
 
+float	get_delta(void)
+{
+	static struct timeval	last_tv;
+	struct timeval			tv;
+	unsigned long long		delta_usec;
+
+	if (!last_tv.tv_sec && !last_tv.tv_usec)
+	{
+		gettimeofday(&last_tv, NULL);
+		return (0);
+	}
+	gettimeofday(&tv, NULL);
+	delta_usec = (tv.tv_sec - last_tv.tv_sec) * 1000000
+		+ tv.tv_usec - last_tv.tv_usec;
+	last_tv = tv;
+	return (delta_usec / 1000.0f);
+}
+
 int	loop(t_data *data)
 {
-	treat_input(data->scene, 0.01f);
+	treat_input(data->scene, get_delta());
 	ft_memset(data->minimap.buffer->data, 0xFF444444, data->minimap.buffer->width * data->minimap.buffer->height * sizeof(int));
 	render_minimap(&(data->minimap), data->scene);
 	mlx_put_image_to_window(data->display, data->window, data->minimap.buffer, 0, 0);
