@@ -22,6 +22,7 @@ enum	e_std_colors
 	BLUE = 0xFF0000FF,
 	YELLOW = 0xFFFFFF00,
 	WHITE = 0xFFFFFFFF,
+	GRAY = 0xFF444444,
 	BLACK = 0xFF000000,
 };
 
