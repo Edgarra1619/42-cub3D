@@ -20,7 +20,7 @@ int	loop(t_data *const data)
 
 static void	render_loop(t_data *const data)
 {
-	ft_memset(data->minimap.buffer->data, 0xFF444444, sizeof(int)
+	ft_memset(data->minimap.buffer->data, BLACK, sizeof(int)
 		* data->minimap.buffer->width * data->minimap.buffer->height);
 	render_minimap(&(data->minimap), &data->scene);
 	mlx_put_image_to_window(data->display, data->window,
