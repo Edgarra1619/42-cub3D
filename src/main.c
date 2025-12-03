@@ -37,9 +37,12 @@ static void	clean_mlx(t_data *const data)
 			mlx_destroy_image(data->display, data->scene.textures[i]);
 		i++;
 	}
-	mlx_destroy_image(data->display, data->buffer);
-	mlx_destroy_image(data->display, data->minimap.buffer);
-	mlx_destroy_window(data->display, data->window);
+	if (data->buffer)
+		mlx_destroy_image(data->display, data->buffer);
+	if (data->minimap.buffer)
+		mlx_destroy_image(data->display, data->minimap.buffer);
+	if (data->window)
+		mlx_destroy_window(data->display, data->window);
 	mlx_destroy_display(data->display);
 	free(data->display);
 }
