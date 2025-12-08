@@ -17,14 +17,17 @@ void	update_player_dir(t_player *const player, const float delta)
 	player->dir = rot_vec2ff(player->dir, theta);
 }
 
-void	update_player_pos(t_scene *const scene, const float delta)
+void	update_player_pos(t_scene *const scene, float delta)
 {
+	static const float	delta_cap = 1000 / 60.0f;
 	static const float	speed = 0.005f;
 	const t_vec2f		pos = scene->player.pos;
 	const t_vec2f		target_dir = get_target_dir(&scene->player);
-	const t_vec2f		target_pos
-		= sum_vec2f(pos, mult_vec2ff(target_dir, speed * delta));
+	t_vec2f				target_pos;
 
+	if (delta > delta_cap)
+		delta = delta_cap;
+	target_pos = sum_vec2f(pos, mult_vec2ff(target_dir, speed * delta));
 	if (!validate_target_pos((t_vec2f){target_pos.x, pos.y}, scene))
 		scene->player.pos.x = target_pos.x;
 	if (!validate_target_pos((t_vec2f){pos.x, target_pos.y}, scene))
