@@ -78,9 +78,9 @@ static int	parse_player(
 		return (print_error(SECT_PARSE, ERR_MUL_SPAWN));
 	player->pos = (t_vec2f){pos.x + 0.5f, pos.y + 0.5f};
 	if (cell == 'N')
-		player->dir = (t_vec2f){0, 1};
-	else if (cell == 'S')
 		player->dir = (t_vec2f){0, -1};
+	else if (cell == 'S')
+		player->dir = (t_vec2f){0, 1};
 	else if (cell == 'W')
 		player->dir = (t_vec2f){-1, 0};
 	else if (cell == 'E')

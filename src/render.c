@@ -1,77 +1,104 @@
+#include "libft.h"
+#include <cub3d/raycast.h>
+#include <cub3d/vector.h>
+#include <cub3d/types.h>
 #include <cub3d/render.h>
 
-static void		render_cell(const t_minimap *minimap,
-					const t_scene *scene, t_vec2 pos);
-static char		get_cell(const t_scene *scene, t_vec2 pos);
-static t_color	get_cell_color(const t_scene *scene, char cell);
+#include <math.h>
 
-void	render_minimap(t_minimap *const minimap, const t_scene *const scene)
+static void	clear_screen(t_scene *scene, t_img *buffer)
 {
-	t_vec2	current;
+	const t_vec2	buff_size = (t_vec2) {buffer->width, buffer->height};
+	float			dist_mult;
+	t_color		color;
+	t_vec2	i;
 
-	minimap->center = (t_vec2){scene->player.pos.x, scene->player.pos.y};
-	minimap->offset = (t_vec2f){scene->player.pos.x - minimap->center.x,
-		scene->player.pos.y - minimap->center.y};
-	current.x = 0;
-	while (current.x <= MINIMAP_SIZE * 2 + 1)
+	i.y = 0;
+	while (i.y < buff_size.y / 2)
 	{
-		current.y = 0;
-		while (current.y <= MINIMAP_SIZE * 2 + 1)
-		{
-			render_cell(minimap, scene, current);
-			current.y++;
-		}
-		current.x++;
+		color = scene->colors[0];
+		dist_mult = 1.0 / (3 + ft_clampf(5 * ((float) (buffer->height / 2.0)
+								/ (buffer->height / 2.0 - i.y) - 1), 1, 255));
+		color.r = color.r * dist_mult;
+		color.g = color.g * dist_mult;
+		color.b = color.b * dist_mult;
+		color.a = color.a * dist_mult;
+		i.x = 0;
+		while (i.x < buff_size.x)
+			((int*)buffer->data)[i.x++ + i.y * buff_size.x] = color.color;
+		i.y++;
 	}
-	draw_square(minimap->buffer,
-		(t_vec2){MINIMAP_SIZE * minimap->pixel_size - minimap->pixel_size / 4,
-		MINIMAP_SIZE * minimap->pixel_size - minimap->pixel_size / 4},
-		(t_vec2){MINIMAP_SIZE * minimap->pixel_size + minimap->pixel_size / 4,
-		MINIMAP_SIZE * minimap->pixel_size + minimap->pixel_size / 4},
-		(t_color) BLUE);
+	i.y = buff_size.y;
+	while (i.y > buff_size.y / 2)
+	{
+		color = scene->colors[1];
+		dist_mult = 1 / (3 + ft_clampf(5 * ((float) (buffer->height / 2.0)
+								/ (i.y - buffer->height / 2.0) - 1), 1, 255));
+		color.r = color.r * dist_mult;
+		color.g = color.g * dist_mult;
+		color.b = color.b * dist_mult;
+		color.a = color.a * dist_mult;
+		i.x = 0;
+		while (i.x < buff_size.x)
+			((int*)buffer->data)[i.x++ + i.y * buff_size.x] = color.color;
+		i.y--;
+	}
 }
 
-static void	render_cell(const t_minimap *const minimap,
-	const t_scene *const scene, const t_vec2 pos)
+static void	render_column_loop(t_scene *scene, t_img *buffer, int col, t_rayhit hit)
 {
-	const char	cell = get_cell(scene, (t_vec2){
-			pos.x - MINIMAP_SIZE + minimap->center.x,
-			pos.y - MINIMAP_SIZE + minimap->center.y});
-	const char	type = cell & 3;
+	const float	dist_mult = 1 / (3 + ft_clampf(5 * (hit.projDist - 1), 1, 255));
+	const int	height = buffer->height / hit.projDist;
+	const int	start = buffer->height / 2 - height / 2;
+	t_color		pixel;
+	t_vec2		iter;
 
-	if (type == WALL)
-		return ;
-	draw_square(minimap->buffer,
-		(t_vec2){(pos.x - minimap->offset.x) * minimap->pixel_size,
-		(pos.y - minimap->offset.y) * minimap->pixel_size},
-		(t_vec2){(pos.x - minimap->offset.x + 1) * minimap->pixel_size,
-		(pos.y - minimap->offset.y + 1) * minimap->pixel_size},
-		get_cell_color(scene, cell));
+	iter.x = ft_max(0, start);
+	iter.y = ft_min(start + height, buffer->height);
+	while (iter.x < iter.y)
+	{
+		pixel = ((t_color*)(scene->textures[hit.side_hit]->data +
+			(int) (scene->textures[hit.side_hit]->size_line *
+			(int) ((float) (iter.x - start) / height
+			* scene->textures[hit.side_hit]->height))))
+			[(int)(scene->textures[hit.side_hit]->width * hit.hit_position.x)];
+		pixel.r = pixel.r * dist_mult;
+		pixel.g = pixel.g * dist_mult;
+		pixel.b = pixel.b * dist_mult;
+		pixel.a = pixel.a * dist_mult;
+		((int*)(buffer->data + buffer->size_line * iter.x))[col] = pixel.color;
+		iter.x++;
+	}
 }
 
-static char	get_cell(const t_scene *const scene, const t_vec2 pos)
+//height = buffer->height / dist
+//start = buffer->height / 2 - height / 2
+//end = min(start + height, buffer->height) - i;
+//i = max(0, start)
+//i < height && i + start < buffer->height
+//place at start + i with texture coord i/height using uv coords
+static void	render_column(t_scene *scene, t_img *buffer, t_vec2f dir, int col)
 {
-	if (pos.x < 0 || pos.y < 0
-		|| pos.x >= scene->map_size.x || pos.y >= scene->map_size.y)
-		return (WALL);
-	return (scene->map[pos.x][pos.y]);
+	const t_rayhit			hit = cast_render_ray(scene, scene->player.pos, dir);
+
+	render_column_loop(scene, buffer, col, hit);
 }
 
-static t_color	get_cell_color(const t_scene *const scene, const char cell)
+void	render_camera(t_scene *scene, t_img *buffer)
 {
-	const char		type = cell & 3;
-	const t_entity	*entity;
+	const int		width = buffer->width;
+	const t_vec2f	step =
+		mult_vec2ff(rot_vec2ff(scene->player.dir, M_PI_2), (float) 1 / (width));
+	t_vec2f			dir;
+	int				i;
 
-	if (type == SPACE)
-		return ((t_color)GRAY);
-	if (type == WALL)
-		return ((t_color)BLACK);
-	entity = scene->entities + (cell >> 2);
-	if (entity->type == KEY)
-		return ((t_color)YELLOW);
-	if (entity->open)
-		return ((t_color)GRAY);
-	if (entity->unlocked)
-		return ((t_color)GREEN);
-	return ((t_color)RED);
+	clear_screen(scene, buffer);
+	dir = sum_vec2f(scene->player.dir, mult_vec2ff(step, (float) - width / 2));
+	i = 0;
+	while (i < width)
+	{
+		render_column(scene, buffer, dir, i);
+		dir = sum_vec2f(dir, step);
+		i++;
+	}
 }

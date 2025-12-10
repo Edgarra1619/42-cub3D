@@ -1,6 +1,6 @@
 NAME = cub3D
 SRCS =  main.c vector.c error.c init.c parse.c parse_prop.c parse_map.c read.c validate.c
-SRCS += loop.c input.c player.c collision.c render.c render_utils.c
+SRCS += loop.c input.c player.c collision.c render.c minimap.c render_utils.c raycast.c
 INCDIR = ./include/
 SRCDIR = ./src/
 OBJDIR = ./obj/
@@ -9,11 +9,11 @@ MLXDIR = ./minilibx/
 TESTARGS = ./maps/test.cub
 
 CC = clang
-CFLAGS = -Wall -Wextra -gdwarf-4 $(INCFLAGS) -D MINIMAP_SIZE=10
+CFLAGS = -Wall -Wextra -gdwarf-4 -O0 $(INCFLAGS) -D MINIMAP_SIZE=10
 INCFLAGS = -I $(INCDIR) -I $(LFTDIR)/include/ -I $(MLXDIR)
 MLXFLAGS = -lXext -lX11
 
-VALGFLAGS = --track-origins=yes --leak-check=full
+VALGFLAGS = 
 
 OBJS = $(patsubst %.c, $(OBJDIR)%.o, $(SRCS))
 LFT = $(LFTDIR)/libft.a
@@ -50,7 +50,7 @@ test: $(NAME)
 	./$(NAME) $(TESTARGS)
 
 gprof: $(NAME)
-	./$(NAME)
+	./$(NAME) $(TESTARGS)
 	rm gprof-output -f
 	gprof $(NAME) > gprof-output
 

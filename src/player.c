@@ -38,12 +38,12 @@ static t_vec2f	get_target_dir(const t_player *const player)
 
 	target_dir = (t_vec2f){0};
 	if (keys_held & KEYCODEW)
-		target_dir = sum_vec2f(target_dir, (t_vec2f){-dir.x, -dir.y});
-	if (keys_held & KEYCODES)
 		target_dir = sum_vec2f(target_dir, dir);
+	if (keys_held & KEYCODES)
+		target_dir = sum_vec2f(target_dir, (t_vec2f){-dir.x, -dir.y});
 	if (keys_held & KEYCODEA)
-		target_dir = sum_vec2f(target_dir, (t_vec2f){-dir.y, dir.x});
-	if (keys_held & KEYCODED)
 		target_dir = sum_vec2f(target_dir, (t_vec2f){dir.y, -dir.x});
+	if (keys_held & KEYCODED)
+		target_dir = sum_vec2f(target_dir, (t_vec2f){-dir.y, dir.x});
 	return (norm_vec2f(target_dir));
 }

@@ -39,8 +39,6 @@ static void	clean_mlx(t_data *const data)
 	}
 	if (data->buffer)
 		mlx_destroy_image(data->display, data->buffer);
-	if (data->minimap.buffer)
-		mlx_destroy_image(data->display, data->minimap.buffer);
 	if (data->window)
 		mlx_destroy_window(data->display, data->window);
 	mlx_destroy_display(data->display);

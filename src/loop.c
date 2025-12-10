@@ -20,11 +20,12 @@ int	loop(t_data *const data)
 
 static void	render_loop(t_data *const data)
 {
-	ft_memset(data->minimap.buffer->data, BLACK, sizeof(int)
+	ft_bzero(data->minimap.buffer->data, sizeof(int)
 		* data->minimap.buffer->width * data->minimap.buffer->height);
+	render_camera(&data->scene, data->buffer);
 	render_minimap(&(data->minimap), &data->scene);
 	mlx_put_image_to_window(data->display, data->window,
-		data->minimap.buffer, 0, 0);
+		data->buffer, 0, 0);
 }
 
 static void	game_loop(t_scene *const scene)

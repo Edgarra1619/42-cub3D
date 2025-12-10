@@ -41,16 +41,17 @@ t_rayhit	cast_render_ray(t_scene *const scene, const t_vec2f pos, const t_vec2f 
 		if (scene->map[info.map_pos.x][info.map_pos.y] == WALL)
 			hit.hit = 1;
 	}
-	if (hit.side_hit & 0b10)
+	if (hit.side_hit & 0b01)
 	{
 		hit.projDist = info.length.x - info.length_step.x;
-		hit.hit_position.x = floorf(pos.x + hit.projDist * dir.x);
+		hit.hit_position.x = pos.y + hit.projDist * dir.y;
 	}
 	else
 	{
 		hit.projDist = info.length.y - info.length_step.y;
-		hit.hit_position.x = floorf(pos.y + hit.projDist * dir.y);
+		hit.hit_position.x = pos.x + hit.projDist * dir.x;
 	}
+	hit.hit_position.x = hit.hit_position.x - floorf(hit.hit_position.x);
 	return (hit);
 }
 

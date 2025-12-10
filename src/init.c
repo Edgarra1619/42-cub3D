@@ -27,11 +27,11 @@ int	init(t_data *const data, const char *const file)
 // TODO: protect allocs
 static void	init_window(t_data *const data)
 {
-	data->window = mlx_new_window(data->display, 512, 512, "cub3D");
-	data->buffer = mlx_new_image(data->display, 512, 512);
-	data->minimap.buffer = mlx_new_image(data->display, 242, 242);
+	data->window = mlx_new_window(data->display, 1360, 768, "cub3D");
+	data->buffer = mlx_new_image(data->display, 1360, 768);
+	data->minimap.buffer = data->buffer;
 	data->minimap.pixel_size
-		= data->minimap.buffer->height / (MINIMAP_SIZE * 2);
+		= 242 / (MINIMAP_SIZE * 2);
 	mlx_hook(data->window, ButtonPress, ButtonPressMask, mouse_down_hook,
 		&(data->scene.player));
 	mlx_hook(data->window, ButtonRelease, ButtonReleaseMask, mouse_up_hook,

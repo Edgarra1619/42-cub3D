@@ -27,7 +27,7 @@ SRCDIR = ./src/
 OBJDIR = ./obj/
 
 CC = clang
-CFLAGS = -Wall -Wextra -Werror -I $(INCDIR)
+CFLAGS = -Wall -Wextra -Werror -O3 -I $(INCDIR)
 AR = ar
 ARFLAGS = rc
 
