@@ -6,6 +6,7 @@
 # define SECT_INIT	"initialization"
 # define SECT_PARSE	"parsing"
 
+# define ERR_INV_FORMAT	"invalid file format"
 # define ERR_PATH_MAX	"path too long"
 # define ERR_DUP_PROP	"duplicate property"
 # define ERR_INV_PROP	"invalid property"
