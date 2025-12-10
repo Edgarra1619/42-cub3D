@@ -3,6 +3,8 @@
 
 # define PROG_NAME	"cub3D"
 
+# define MSG_USAGE	"usage: cub3D <.cub file>\n"
+
 # define SECT_INIT	"initialization"
 # define SECT_PARSE	"parsing"
 
