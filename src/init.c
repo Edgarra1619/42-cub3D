@@ -51,9 +51,12 @@ static int	init_scene(
 	t_scene *const scene, const char *const file, void *const mlx)
 {
 	const int	fd = open(file, O_RDONLY);
+	const int	file_len = ft_strlen(file);
 
 	if (fd == -1)
 		return (print_error(SECT_INIT, NULL));
+	if (file_len < 4 || ft_strcmp(".cub", file + file_len - 4))
+		return (print_error(SECT_INIT, ERR_INV_FORMAT));
 	if (init_assets(scene, fd, mlx) || init_map(scene, fd))
 		return (1);
 	close(fd);
