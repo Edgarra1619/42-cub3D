@@ -53,7 +53,7 @@ static void	render_column_loop(t_scene *scene, t_img *buffer, int col, t_rayhit 
 	t_color		pixel;
 	t_vec2		iter;
 
-	if (hit.side_hit == SOUTH || hit.side_hit == EAST)
+	if (!(hit.side_hit & 0b10))
 		hit.hit_position.x = 1 - hit.hit_position.x;
 	iter.x = ft_max(0, start);
 	iter.y = ft_min(start + height, buffer->height);
