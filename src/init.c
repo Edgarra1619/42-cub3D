@@ -10,26 +10,28 @@
 
 #include <errno.h>
 
-static void	init_mlx(t_data *data);
+static void	init_window(t_data *data);
 static int	init_scene(t_scene *scene, const char *file, void *mlx);
 static int	init_assets(t_scene *scene, int fd, void *mlx);
 static int	init_map(t_scene *scene, int fd);
 
 int	init(t_data *const data, const char *const file)
 {
-	init_mlx(data);
-	return (init_scene(&data->scene, file, data->display));
+	data->display = mlx_init();
+	if (init_scene(&data->scene, file, data->display))
+		return (1);
+	init_window(data);
+	return (0);
 }
 
 // TODO: protect allocs
-static void	init_mlx(t_data *const data)
+static void	init_window(t_data *const data)
 {
-	data->display = mlx_init();
-	data->window = mlx_new_window(data->display, 512, 512, "cub3D");
-	data->buffer = mlx_new_image(data->display, 512, 512);
-	data->minimap.buffer = mlx_new_image(data->display, 242, 242);
+	data->window = mlx_new_window(data->display, 1360, 768, "cub3D");
+	data->buffer = mlx_new_image(data->display, 1360, 768);
+	data->minimap.buffer = data->buffer;
 	data->minimap.pixel_size
-		= data->minimap.buffer->height / (MINIMAP_SIZE * 2);
+		= 242 / (MINIMAP_SIZE * 2);
 	mlx_hook(data->window, ButtonPress, ButtonPressMask, mouse_down_hook,
 		&(data->scene.player));
 	mlx_hook(data->window, ButtonRelease, ButtonReleaseMask, mouse_up_hook,
