@@ -36,6 +36,7 @@ static void	game_loop(t_scene *const scene)
 		update_player_dir(&scene->player, delta);
 	if (keys_held & (KEYCODEW | KEYCODES | KEYCODEA | KEYCODED))
 		update_player_pos(scene, delta);
+	update_entities(scene, delta);
 }
 
 static float	get_delta(void)

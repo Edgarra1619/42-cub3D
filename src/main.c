@@ -1,7 +1,5 @@
 #include <cub3d/cub3d.h>
-#include <cub3d/types.h>
-#include <cub3d/vector.h>
-#include <cub3d/render.h>
+#include <cub3d/strings.h>
 
 #include <libft.h>
 
@@ -16,7 +14,10 @@ int	main(int argc, char **argv)
 	static t_data	data;
 
 	if (argc != 2)
+	{
+		ft_putstr_fd(MSG_USAGE, 1);
 		return (1);
+	}
 	if (init(&data, argv[1]))
 	{
 		clean_mlx(&data);

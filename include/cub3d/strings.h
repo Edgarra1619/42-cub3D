@@ -3,9 +3,12 @@
 
 # define PROG_NAME	"cub3D"
 
+# define MSG_USAGE	"usage: cub3D <.cub file>\n"
+
 # define SECT_INIT	"initialization"
 # define SECT_PARSE	"parsing"
 
+# define ERR_INV_FORMAT	"invalid file format"
 # define ERR_PATH_MAX	"path too long"
 # define ERR_DUP_PROP	"duplicate property"
 # define ERR_INV_PROP	"invalid property"

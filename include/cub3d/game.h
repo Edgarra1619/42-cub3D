@@ -11,6 +11,9 @@ typedef struct s_box
 
 void	update_player_dir(t_player *player, float delta);
 void	update_player_pos(t_scene *scene, float delta);
-int		check_map_coll(t_vec2f pos, t_scene *scene);
+void	update_entities(t_scene *scene, float delta);
+t_box	get_box(t_vec2f pos, float size);
+int		check_cell_coll(t_vec2 cell, t_box box, const t_scene *scene);
+int		check_entity_coll(t_vec2 cell, t_box box, const t_scene *scene);
 
 #endif

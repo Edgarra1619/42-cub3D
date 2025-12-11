@@ -27,15 +27,16 @@ typedef struct s_entity
 	t_vec2			pos;
 	bool			open;
 	bool			unlocked;
+	float			lock_time;
 }	t_entity;
 
 typedef struct s_player
 {
 	t_vec2f	pos;
 	t_vec2f	dir;
+	int		key_count;
 	int		keys_held;
 	t_vec2	mouse_pos;
-	int		key_count;
 }	t_player;
 
 typedef struct s_scene
