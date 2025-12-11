@@ -49,35 +49,3 @@ int	keyboard_down_hook(int keycode, t_player *player)
 		player->keys_held |= KEYCODERIGHT;
 	return (0);
 }
-
-int	mouse_up_hook(int button, t_vec3 pos, t_player *player)
-{
-	(void) pos;
-	if (button == 1)
-		player->keys_held &= ~BUTTONL;
-	else if (button == 3)
-		player->keys_held &= ~BUTTONR;
-	return (0);
-}
-
-int	mouse_down_hook(int button, t_vec3 pos, t_player *player)
-{
-	if (button == 1)
-		player->keys_held |= BUTTONL;
-	else if (button == 3)
-		player->keys_held |= BUTTONR;
-	player->mouse_pos = (t_vec2){pos.x, pos.z};
-	return (0);
-}
-
-int	mouse_move_hook(int x, int y, t_player *player)
-{
-	//const t_vecf2	mov = (t_vecf2) {
-	//	(float)(state->mouse_pos.x - pos.x) / 10,
-	//	(float)(state->mouse_pos.y - pos.y) / 10
-	//};
-	//
-	//rotate_camera(player->camera, mov);
-	player->mouse_pos = (t_vec2){x, y};
-	return (0);
-}
