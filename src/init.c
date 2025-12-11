@@ -27,8 +27,9 @@ int	init(t_data *const data, const char *const file)
 // TODO: protect allocs
 static void	init_window(t_data *const data)
 {
-	data->window = mlx_new_window(data->display, 1360, 768, "cub3D");
-	data->buffer = mlx_new_image(data->display, 1360, 768);
+	data->window
+		= mlx_new_window(data->display, WINDOW_WIDTH, WINDOW_HEIGHT, "cub3D");
+	data->buffer = mlx_new_image(data->display, WINDOW_WIDTH, WINDOW_HEIGHT);
 	data->minimap.buffer = data->buffer;
 	data->minimap.pixel_size = 242 / (MINIMAP_SIZE * 2);
 	mlx_hook(data->window, KeyPress, KeyPressMask,
@@ -38,6 +39,9 @@ static void	init_window(t_data *const data)
 	mlx_hook(data->window, ClientMessage, LeaveWindowMask,
 		mlx_loop_end, data->display);
 	mlx_loop_hook(data->display, loop, data);
+	mlx_mouse_move(data->display, data->window,
+		WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
+	mlx_mouse_hide(data->display, data->window);
 }
 
 static int	init_scene(

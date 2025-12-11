@@ -7,13 +7,13 @@
 
 #include <sys/time.h>
 
-static void		game_loop(t_scene *scene);
+static void		game_loop(t_data *data);
 static void		render_loop(t_data *data);
 static float	get_delta(void);
 
 int	loop(t_data *const data)
 {
-	game_loop(&data->scene);
+	game_loop(data);
 	render_loop(data);
 	return (0);
 }
@@ -28,16 +28,19 @@ static void	render_loop(t_data *const data)
 		data->buffer, 0, 0);
 }
 
-static void	game_loop(t_scene *const scene)
+static void	game_loop(t_data *const data)
 {
 	const float	delta = get_delta();
-	const int	keys_held = scene->player.keys_held;
+	const int	mouse_mov = update_mouse(data);
+	const int	keys_held = data->scene.player.keys_held;
 
+	if (mouse_mov)
+		update_player_dir_mouse(&data->scene.player, mouse_mov);
 	if (keys_held & (KEYCODELEFT | KEYCODERIGHT))
-		update_player_dir(&scene->player, delta);
+		update_player_dir(&data->scene.player, delta);
 	if (keys_held & (KEYCODEW | KEYCODES | KEYCODEA | KEYCODED))
-		update_player_pos(scene, delta);
-	update_entities(scene, delta);
+		update_player_pos(&data->scene, delta);
+	update_entities(&data->scene, delta);
 }
 
 static float	get_delta(void)

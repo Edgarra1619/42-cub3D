@@ -1,4 +1,5 @@
 #include <cub3d/game.h>
+#include <cub3d/render.h>
 
 static t_vec2f	get_target_dir(const t_player *player);
 static int		validate_target_pos(t_vec2f pos, const t_scene *scene);
@@ -15,6 +16,13 @@ void	update_player_dir(t_player *const player, const float delta)
 	if (keys_held & KEYCODERIGHT)
 		theta += speed * delta;
 	player->dir = rot_vec2ff(player->dir, theta);
+}
+
+void	update_player_dir_mouse(t_player *const player, const int mouse_mov)
+{
+	static const float	sensitivity = 0.002f;
+
+	player->dir = rot_vec2ff(player->dir, mouse_mov * sensitivity);
 }
 
 void	update_player_pos(t_scene *const scene, float delta)

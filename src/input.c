@@ -1,5 +1,6 @@
 #include <cub3d/vector.h>
 #include <cub3d/types.h>
+#include <cub3d/render.h>
 
 #include <mlx.h>
 
@@ -47,5 +48,19 @@ int	keyboard_down_hook(int keycode, t_player *player)
 		player->keys_held |= KEYCODELEFT;
 	if (keycode == XK_Right)
 		player->keys_held |= KEYCODERIGHT;
+	return (0);
+}
+
+int	update_mouse(t_data *const data)
+{
+	static const t_vec2	origin = {WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2};
+	t_vec2				pos;
+
+	mlx_mouse_get_pos(data->display, data->window, &pos.x, &pos.y);
+	if (pos.x != origin.x || pos.y != origin.y)
+	{
+		mlx_mouse_move(data->display, data->window, origin.x, origin.y);
+		return (pos.x - origin.x);
+	}
 	return (0);
 }
