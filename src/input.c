@@ -1,5 +1,6 @@
 #include <cub3d/vector.h>
 #include <cub3d/types.h>
+#include <cub3d/render.h>
 
 #include <mlx.h>
 
@@ -50,34 +51,16 @@ int	keyboard_down_hook(int keycode, t_player *player)
 	return (0);
 }
 
-int	mouse_up_hook(int button, t_vec3 pos, t_player *player)
+int	update_mouse(t_data *const data)
 {
-	(void) pos;
-	if (button == 1)
-		player->keys_held &= ~BUTTONL;
-	else if (button == 3)
-		player->keys_held &= ~BUTTONR;
-	return (0);
-}
+	static const t_vec2	origin = {WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2};
+	t_vec2				pos;
 
-int	mouse_down_hook(int button, t_vec3 pos, t_player *player)
-{
-	if (button == 1)
-		player->keys_held |= BUTTONL;
-	else if (button == 3)
-		player->keys_held |= BUTTONR;
-	player->mouse_pos = (t_vec2){pos.x, pos.z};
-	return (0);
-}
-
-int	mouse_move_hook(int x, int y, t_player *player)
-{
-	//const t_vecf2	mov = (t_vecf2) {
-	//	(float)(state->mouse_pos.x - pos.x) / 10,
-	//	(float)(state->mouse_pos.y - pos.y) / 10
-	//};
-	//
-	//rotate_camera(player->camera, mov);
-	player->mouse_pos = (t_vec2){x, y};
+	mlx_mouse_get_pos(data->display, data->window, &pos.x, &pos.y);
+	if (pos.x != origin.x || pos.y != origin.y)
+	{
+		mlx_mouse_move(data->display, data->window, origin.x, origin.y);
+		return (pos.x - origin.x);
+	}
 	return (0);
 }

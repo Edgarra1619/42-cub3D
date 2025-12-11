@@ -27,24 +27,21 @@ int	init(t_data *const data, const char *const file)
 // TODO: protect allocs
 static void	init_window(t_data *const data)
 {
-	data->window = mlx_new_window(data->display, 1360, 768, "cub3D");
-	data->buffer = mlx_new_image(data->display, 1360, 768);
+	data->window
+		= mlx_new_window(data->display, WINDOW_WIDTH, WINDOW_HEIGHT, "cub3D");
+	data->buffer = mlx_new_image(data->display, WINDOW_WIDTH, WINDOW_HEIGHT);
 	data->minimap.buffer = data->buffer;
-	data->minimap.pixel_size
-		= 242 / (MINIMAP_SIZE * 2);
-	mlx_hook(data->window, ButtonPress, ButtonPressMask, mouse_down_hook,
-		&(data->scene.player));
-	mlx_hook(data->window, ButtonRelease, ButtonReleaseMask, mouse_up_hook,
-		&(data->scene.player));
-	mlx_hook(data->window, MotionNotify, ButtonMotionMask, mouse_move_hook,
-		&(data->scene.player));
-	mlx_hook(data->window, KeyPress, KeyPressMask, keyboard_down_hook,
-		&(data->scene.player));
-	mlx_hook(data->window, KeyRelease, KeyReleaseMask, keyboard_up_hook,
-		data);
+	data->minimap.pixel_size = 242 / (MINIMAP_SIZE * 2);
+	mlx_hook(data->window, KeyPress, KeyPressMask,
+		keyboard_down_hook, &(data->scene.player));
+	mlx_hook(data->window, KeyRelease, KeyReleaseMask,
+		keyboard_up_hook, data);
+	mlx_hook(data->window, ClientMessage, LeaveWindowMask,
+		mlx_loop_end, data->display);
 	mlx_loop_hook(data->display, loop, data);
-	mlx_hook(data->window, ClientMessage, LeaveWindowMask, mlx_loop_end,
-		data->display);
+	mlx_mouse_move(data->display, data->window,
+		WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
+	mlx_mouse_hide(data->display, data->window);
 }
 
 static int	init_scene(
@@ -82,8 +79,5 @@ static int	init_map(t_scene *const scene, const int fd)
 {
 	skip_empty_lines(fd);
 	ft_memset(scene->map, WALL, sizeof(char) * MAP_MAX * MAP_MAX);
-	scene->player.pos.x = -1.0f;
-	if (parse_map(scene, fd) || validate_map(scene))
-		return (1);
-	return (0);
+	return (parse_map(scene, fd) || validate_map(scene));
 }

@@ -36,7 +36,6 @@ typedef struct s_player
 	t_vec2f	dir;
 	int		key_count;
 	int		keys_held;
-	t_vec2	mouse_pos;
 }	t_player;
 
 typedef struct s_scene
