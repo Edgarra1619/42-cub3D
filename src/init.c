@@ -75,8 +75,5 @@ static int	init_map(t_scene *const scene, const int fd)
 {
 	skip_empty_lines(fd);
 	ft_memset(scene->map, WALL, sizeof(char) * MAP_MAX * MAP_MAX);
-	scene->player.pos.x = -1.0f;
-	if (parse_map(scene, fd) || validate_map(scene))
-		return (1);
-	return (0);
+	return (parse_map(scene, fd) || validate_map(scene));
 }

@@ -73,7 +73,7 @@ static int	parse_entity(
 static int	parse_player(
 	const char cell, const t_vec2 pos, t_player *const player)
 {
-	if (player->pos.x != -1.0f)
+	if (player->pos.x)
 		return (print_error(SECT_PARSE, ERR_MUL_SPAWN));
 	player->pos = (t_vec2f){pos.x + 0.5f, pos.y + 0.5f};
 	if (cell == 'N')
