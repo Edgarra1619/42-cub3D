@@ -17,16 +17,16 @@ void	update_entities(t_scene *const scene, const float delta)
 	while (i < entity_count)
 	{
 		entity = scene->entities + i;
+		i++;
 		if (entity->type == DOOR)
 		{
 			if (!entity->open)
-				return ;
+				continue ;
 			if (entity->lock_time > delta)
 				entity->lock_time -= delta;
 			else
 				entity->open = false;
 		}
-		i++;
 	}
 }
 
