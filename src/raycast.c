@@ -5,15 +5,17 @@
 
 #include <math.h>
 
-static void	fill_rayhelper(struct s_rayhelper *helper, t_vec2f pos, t_vec2f dir);
 static void	render_ray_step(struct s_rayhelper *info, t_rayhit *hit);
 static int	render_ray_check(t_scene *scene, struct s_rayhelper *info, t_rayhit *hit);
+static void	fill_rayhelper
+		(struct s_rayhelper *helper, t_vec2f pos, t_vec2f dir);
 
 //TODO: make a limited distance version
 //TODO: make one for sprite rendering (needs to return multiple results)
 
 //the value returned in hit_positon is the horizontal position inside the wall
-t_rayhit	cast_render_ray(t_scene *const scene, const t_vec2f pos, const t_vec2f dir)
+t_rayhit	cast_render_ray
+		(t_scene *const scene, const t_vec2f pos, const t_vec2f dir)
 {
 	t_rayhit			hit;
 	struct s_rayhelper	info;
@@ -80,9 +82,9 @@ static void	render_ray_step(struct s_rayhelper *info, t_rayhit *hit)
 		info->length.y += info->length_step.y;
 		info->map_pos.y += info->map_step.y;
 		if (info->map_step.y < 0)
-			hit->side_hit = NORTH;
-		else
 			hit->side_hit = SOUTH;
+		else
+			hit->side_hit = NORTH;
 	}
 }
 

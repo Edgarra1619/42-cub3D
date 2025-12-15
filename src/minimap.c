@@ -1,3 +1,4 @@
+#include "libft.h"
 #include <cub3d/defines.h>
 #include <cub3d/render.h>
 
@@ -46,8 +47,8 @@ static void	render_cell(const t_minimap *const minimap,
 	draw_square(minimap->buffer,
 		(t_vec2){(pos.x - minimap->offset.x) * minimap->pixel_size,
 		(pos.y - minimap->offset.y) * minimap->pixel_size},
-		(t_vec2){(pos.x - minimap->offset.x + 1) * minimap->pixel_size,
-		(pos.y - minimap->offset.y + 1) * minimap->pixel_size},
+		(t_vec2){ft_min((pos.x - minimap->offset.x + 1) * minimap->pixel_size, 242),
+		ft_min((pos.y - minimap->offset.y + 1) * minimap->pixel_size, 242)},
 		get_cell_color(scene, cell));
 }
 
