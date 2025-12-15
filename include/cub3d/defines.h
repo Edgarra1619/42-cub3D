@@ -1,6 +1,12 @@
 #ifndef DEFINES_H
 # define DEFINES_H
 
+# ifndef WINDOW_WIDTH
+#  define WINDOW_WIDTH 1280
+# endif
+# ifndef WINDOW_HEIGHT
+#  define WINDOW_HEIGHT 720
+# endif
 # ifndef READ_SIZE
 #  define READ_SIZE		1024
 # endif
