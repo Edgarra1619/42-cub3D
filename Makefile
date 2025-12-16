@@ -1,6 +1,7 @@
 NAME = cub3D
-SRCS =  main.c vector.c error.c init.c parse.c parse_prop.c parse_map.c read.c validate.c
-SRCS += loop.c input.c collision.c player.c entity.c render.c render_utils.c minimap.c raycast.c
+SRCS =  main.c vector.c vector_float.c error.c init.c parse.c parse_prop.c
+SRCS += parse_map.c read.c validate.c loop.c input.c collision.c player.c
+SRCS += entity.c render.c render_utils.c minimap.c raycast.c
 INCDIR = ./include/
 SRCDIR = ./src/
 OBJDIR = ./obj/

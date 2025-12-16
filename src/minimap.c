@@ -11,7 +11,8 @@ void	render_minimap(t_minimap *const minimap, const t_scene *const scene)
 {
 	t_vec2	current;
 
-	draw_square(minimap->buffer, (t_vec2) {0, 0}, (t_vec2) {242, 242}, (t_color) BLACK);
+	draw_square(minimap->buffer, (t_vec2){0, 0},
+		(t_vec2){MINIMAP_WIDTH, MINIMAP_WIDTH}, (t_color)BLACK);
 	minimap->center = (t_vec2){scene->player.pos.x, scene->player.pos.y};
 	minimap->offset = (t_vec2f){scene->player.pos.x - minimap->center.x,
 		scene->player.pos.y - minimap->center.y};
@@ -45,10 +46,14 @@ static void	render_cell(const t_minimap *const minimap,
 	if (type == WALL)
 		return ;
 	draw_square(minimap->buffer,
-		(t_vec2){(pos.x - minimap->offset.x) * minimap->pixel_size,
+		(t_vec2){
+		(pos.x - minimap->offset.x) * minimap->pixel_size,
 		(pos.y - minimap->offset.y) * minimap->pixel_size},
-		(t_vec2){ft_min((pos.x - minimap->offset.x + 1) * minimap->pixel_size, 242),
-		ft_min((pos.y - minimap->offset.y + 1) * minimap->pixel_size, 242)},
+		(t_vec2){
+		ft_min((pos.x - minimap->offset.x + 1) * minimap->pixel_size,
+			MINIMAP_WIDTH),
+		ft_min((pos.y - minimap->offset.y + 1) * minimap->pixel_size,
+			MINIMAP_WIDTH)},
 		get_cell_color(scene, cell));
 }
 

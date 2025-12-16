@@ -10,7 +10,7 @@
 
 #include <errno.h>
 
-static void	init_window(t_data *data);
+static int	init_window(t_data *data);
 static int	init_scene(t_scene *scene, const char *file, void *mlx);
 static int	init_assets(t_scene *scene, int fd, void *mlx);
 static int	init_map(t_scene *scene, int fd);
@@ -18,20 +18,22 @@ static int	init_map(t_scene *scene, int fd);
 int	init(t_data *const data, const char *const file)
 {
 	data->display = mlx_init();
-	if (init_scene(&data->scene, file, data->display))
-		return (1);
-	init_window(data);
-	return (0);
+	return (!data->display
+		|| init_scene(&data->scene, file, data->display)
+		|| init_window(data));
 }
 
-// TODO: protect allocs
-static void	init_window(t_data *const data)
+static int	init_window(t_data *const data)
 {
 	data->window
 		= mlx_new_window(data->display, WINDOW_WIDTH, WINDOW_HEIGHT, "cub3D");
+	if (!data->window)
+		return (1);
 	data->buffer = mlx_new_image(data->display, WINDOW_WIDTH, WINDOW_HEIGHT);
+	if (!data->buffer)
+		return (1);
 	data->minimap.buffer = data->buffer;
-	data->minimap.pixel_size = 242 / (MINIMAP_SIZE * 2);
+	data->minimap.pixel_size = MINIMAP_WIDTH / (MINIMAP_SIZE * 2);
 	mlx_hook(data->window, KeyPress, KeyPressMask,
 		keyboard_down_hook, &(data->scene.player));
 	mlx_hook(data->window, KeyRelease, KeyReleaseMask,
@@ -42,6 +44,7 @@ static void	init_window(t_data *const data)
 	mlx_mouse_move(data->display, data->window,
 		WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
 	mlx_mouse_hide(data->display, data->window);
+	return (0);
 }
 
 static int	init_scene(

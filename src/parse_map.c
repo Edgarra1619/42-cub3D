@@ -64,6 +64,8 @@ static int	parse_entity(
 		return (print_error(SECT_PARSE, ERR_ENTITY_MAX));
 	entity = (t_entity){0};
 	entity.type = get_entity_type(cell);
+	if (cell == '|')
+		entity.vert = true;
 	entity.pos = pos;
 	scene->map[pos.x][pos.y] += (id << 2);
 	scene->entities[id] = entity;

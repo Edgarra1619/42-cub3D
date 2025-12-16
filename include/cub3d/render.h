@@ -4,6 +4,15 @@
 # include <cub3d/types.h>
 # include <cub3d/raycast.h>
 
+# ifndef WINDOW_WIDTH
+#  define WINDOW_WIDTH 1280
+# endif
+# ifndef WINDOW_HEIGHT
+#  define WINDOW_HEIGHT 720
+# endif
+# ifndef MINIMAP_WIDTH
+#  define MINIMAP_WIDTH 242
+# endif
 # ifndef MINIMAP_SIZE
 #  define MINIMAP_SIZE 10
 # endif
