@@ -47,7 +47,8 @@ static int	parse_texture(
 			return (print_error(SECT_INIT, ERR_INV_TEX));
 		return (print_error(SECT_INIT, NULL));
 	}
-	if (scene->textures[tex_id]->width % scene->textures[tex_id]->height)
+	if (tex_id == KEY_TEX
+		&& scene->textures[tex_id]->width % scene->textures[tex_id]->height)
 		return (print_error(SECT_INIT, ERR_TEX_SIZE));
 	return (0);
 }
