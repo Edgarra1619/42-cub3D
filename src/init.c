@@ -33,7 +33,7 @@ static int	init_window(t_data *const data)
 	if (!data->buffer)
 		return (1);
 	data->minimap.buffer = data->buffer;
-	data->minimap.pixel_size = 242 / (MINIMAP_SIZE * 2);
+	data->minimap.pixel_size = MINIMAP_WIDTH / (MINIMAP_SIZE * 2);
 	mlx_hook(data->window, KeyPress, KeyPressMask,
 		keyboard_down_hook, &(data->scene.player));
 	mlx_hook(data->window, KeyRelease, KeyReleaseMask,

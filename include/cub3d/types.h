@@ -25,6 +25,7 @@ typedef struct s_entity
 {
 	enum e_entity	type;
 	t_vec2			pos;
+	bool			vert;
 	bool			open;
 	bool			unlocked;
 	float			lock_time;

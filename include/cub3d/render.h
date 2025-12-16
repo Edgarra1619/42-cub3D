@@ -10,6 +10,9 @@
 # ifndef WINDOW_HEIGHT
 #  define WINDOW_HEIGHT 720
 # endif
+# ifndef MINIMAP_WIDTH
+#  define MINIMAP_WIDTH 242
+# endif
 # ifndef MINIMAP_SIZE
 #  define MINIMAP_SIZE 10
 # endif

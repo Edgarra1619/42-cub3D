@@ -1,5 +1,6 @@
 #include <cub3d/cub3d.h>
 #include <cub3d/game.h>
+#include <cub3d/render.h>
 
 #include <libft.h>
 
@@ -20,12 +21,17 @@ int	loop(t_data *const data)
 
 static void	render_loop(t_data *const data)
 {
+	static char	keys_str[64] = "keys: ";
+
 	ft_bzero(data->minimap.buffer->data, sizeof(int)
 		* data->minimap.buffer->width * data->minimap.buffer->height);
 	render_camera(&data->scene, data->buffer);
 	render_minimap(&(data->minimap), &data->scene);
 	mlx_put_image_to_window(data->display, data->window,
 		data->buffer, 0, 0);
+	ft_itoa_cpy(keys_str + 6, data->scene.player.key_count);
+	mlx_string_put(data->display, data->window,
+		8, MINIMAP_WIDTH + 16, WHITE, keys_str);
 }
 
 static void	game_loop(t_data *const data)
