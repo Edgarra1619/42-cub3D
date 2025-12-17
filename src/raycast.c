@@ -5,11 +5,10 @@
 
 #include <math.h>
 
+static void	render_ray_step(struct s_rayhelper *info, t_rayhit *hit);
+static int	render_ray_check(t_scene *scene, struct s_rayhelper *info, t_rayhit *hit);
 static void	fill_rayhelper
 		(struct s_rayhelper *helper, t_vec2f pos, t_vec2f dir);
-
-//TODO: make a limited distance version
-//TODO: make one for sprite rendering (needs to return multiple results)
 
 //the value returned in hit_positon is the horizontal position inside the wall
 t_rayhit	cast_render_ray
@@ -19,30 +18,8 @@ t_rayhit	cast_render_ray
 	struct s_rayhelper	info;
 
 	fill_rayhelper(&info, pos, dir);
-	hit.hit = 0;
-	while (!hit.hit)
-	{
-		if (info.length.x < info.length.y)
-		{
-			info.length.x += info.length_step.x;
-			info.map_pos.x += info.map_step.x;
-			if (info.map_step.x < 0)
-				hit.side_hit = EAST;
-			else
-				hit.side_hit = WEST;
-		}
-		else
-		{
-			info.length.y += info.length_step.y;
-			info.map_pos.y += info.map_step.y;
-			if (info.map_step.y < 0)
-				hit.side_hit = SOUTH;
-			else
-				hit.side_hit = NORTH;
-		}
-		if (scene->map[info.map_pos.x][info.map_pos.y] == WALL)
-			hit.hit = 1;
-	}
+	while (!render_ray_check(scene, &info, &hit))
+		render_ray_step(&info, &hit);
 	if (hit.side_hit & 0b01)
 	{
 		hit.projDist = info.length.x - info.length_step.x;
@@ -54,6 +31,8 @@ t_rayhit	cast_render_ray
 		hit.hit_position.x = pos.x + hit.projDist * dir.x;
 	}
 	hit.hit_position.x = hit.hit_position.x - floorf(hit.hit_position.x);
+	if (hit.side_hit >> 2)
+		hit.side_hit = DOOR_TEX;
 	return (hit);
 }
 
@@ -82,4 +61,60 @@ static void	fill_rayhelper(struct s_rayhelper *const helper,
 		helper->map_step.y = 1;
 		helper->length.y = (helper->map_pos.y + 1 - pos.y) * helper->length_step.y;
 	}
+}
+
+static void	render_ray_step(struct s_rayhelper *info, t_rayhit *hit)
+{
+	if (info->length.x < info->length.y)
+	{
+		info->length.x += info->length_step.x;
+		info->map_pos.x += info->map_step.x;
+		if (info->map_step.x < 0)
+			hit->side_hit = EAST;
+		else
+			hit->side_hit = WEST;
+	}
+	else
+	{
+		info->length.y += info->length_step.y;
+		info->map_pos.y += info->map_step.y;
+		if (info->map_step.y < 0)
+			hit->side_hit = SOUTH;
+		else
+			hit->side_hit = NORTH;
+	}
+}
+
+static int	check_door(t_entity *entity, struct s_rayhelper *info, t_rayhit *hit)
+{
+	float	temp;
+
+	temp = info->length.y - info->length_step.y + info->length_step.y / 2;
+	if (!entity->vert
+		&& !(temp < info->length.x && temp > info->length.x - info->length_step.x))
+		return (0);
+	temp = info->length.x - info->length_step.x + info->length_step.x / 2;
+	if (entity->vert
+		&& !(temp < info->length.y && temp > info->length.y - info->length_step.y))
+		return (0);
+	hit->side_hit = 0b100 | entity->vert;
+	info->length.x += info->length_step.x / 2;
+	info->length.y += info->length_step.y / 2;
+	return (1);
+}
+
+static int	render_ray_check(t_scene *scene, struct s_rayhelper *info, t_rayhit *hit)
+{
+	t_entity	*entity;
+
+	if (scene->map[info->map_pos.x][info->map_pos.y] == 0)
+		return (0);
+	if (scene->map[info->map_pos.x][info->map_pos.y] == WALL)
+		return (1);
+	entity = scene->entities + (scene->map[info->map_pos.x][info->map_pos.y] >> 2);
+	if (entity->type == DOOR && !entity->open)
+	{
+		return (check_door(entity, info, hit));
+	}
+	return (0);
 }

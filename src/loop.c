@@ -25,7 +25,7 @@ static void	render_loop(t_data *const data)
 
 	ft_bzero(data->minimap.buffer->data, sizeof(int)
 		* data->minimap.buffer->width * data->minimap.buffer->height);
-	render_camera(&data->scene, data->buffer);
+	render_camera(&data->scene, data);
 	render_minimap(&(data->minimap), &data->scene);
 	mlx_put_image_to_window(data->display, data->window,
 		data->buffer, 0, 0);

@@ -79,27 +79,28 @@ static void	render_column_loop(t_scene *scene, t_img *buffer, int col, t_rayhit 
 //i = max(0, start)
 //i < height && i + start < buffer->height
 //place at start + i with texture coord i/height using uv coords
-static void	render_column(t_scene *scene, t_img *buffer, t_vec2f dir, int col)
+static void	render_column(t_scene *scene, t_data *data, t_vec2f dir, int col)
 {
 	const t_rayhit			hit = cast_render_ray(scene, scene->player.pos, dir);
 
-	render_column_loop(scene, buffer, col, hit);
+	data->zbuffer[col] = hit.projDist;
+	render_column_loop(scene, data->buffer, col, hit);
 }
 
-void	render_camera(t_scene *scene, t_img *buffer)
+void	render_camera(t_scene *scene, t_data *data)
 {
-	const int		width = buffer->width;
+	const int		width = data->buffer->width;
 	const t_vec2f	step =
 		mult_vec2ff(rot_vec2ff(scene->player.dir, M_PI_2), (float) 1 / (width));
 	t_vec2f			dir;
 	int				i;
 
-	clear_screen(scene, buffer);
+	clear_screen(scene, data->buffer);
 	dir = sum_vec2f(scene->player.dir, mult_vec2ff(step, (float) - width / 2));
 	i = 0;
 	while (i < width)
 	{
-		render_column(scene, buffer, dir, i);
+		render_column(scene, data, dir, i);
 		dir = sum_vec2f(dir, step);
 		i++;
 	}

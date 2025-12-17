@@ -5,7 +5,6 @@
 
 typedef struct s_raycast_result
 {
-	int		hit;
 	t_vec2f	hit_position;
 	enum
 	{
