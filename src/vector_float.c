@@ -28,3 +28,8 @@ t_vec2f	rot_vec2ff(const t_vec2f a, const float b)
 		sinf(b) * a.x + cosf(b) * a.y
 	});
 }
+
+float	mag2_vec2f(const t_vec2f a)
+{
+	return (a.x * a.x + a.y * a.y);
+}

@@ -77,7 +77,7 @@ static t_color	get_cell_color(const t_scene *const scene, const char cell)
 	entity = scene->entities + (cell >> 2);
 	if (entity->type == KEY)
 		return ((t_color)YELLOW);
-	if (entity->open)
+	if (entity->enabled)
 		return ((t_color)GRAY);
 	if (entity->unlocked)
 		return ((t_color)GREEN);

@@ -112,7 +112,7 @@ static int	render_ray_check(t_scene *scene, struct s_rayhelper *info, t_rayhit *
 	if (scene->map[info->map_pos.x][info->map_pos.y] == WALL)
 		return (1);
 	entity = scene->entities + (scene->map[info->map_pos.x][info->map_pos.y] >> 2);
-	if (entity->type == DOOR && !entity->open)
+	if (entity->type == DOOR && !entity->enabled)
 	{
 		return (check_door(entity, info, hit));
 	}

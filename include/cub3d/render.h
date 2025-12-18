@@ -19,5 +19,6 @@
 
 void		draw_square(t_img *buffer, t_vec2 ul, t_vec2 dr, t_color color);
 t_rayhit	cast_render_ray(t_scene *const scene, const t_vec2f pos, const t_vec2f dir);
+void		render_sprites(t_scene *scene, t_data *data);
 
 #endif
