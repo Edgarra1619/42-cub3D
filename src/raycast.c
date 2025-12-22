@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   raycast.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: edgribei <edgribei@student.42porto.com>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/22 18:28:57 by edgribei          #+#    #+#             */
+/*   Updated: 2025/12/22 18:28:59 by edgribei         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <cub3d/defines.h>
 #include <cub3d/vector.h>
 #include <cub3d/raycast.h>
@@ -6,13 +18,13 @@
 #include <math.h>
 
 static void	render_ray_step(struct s_rayhelper *info, t_rayhit *hit);
-static int	render_ray_check(t_scene *scene,
-				struct s_rayhelper *info, t_rayhit *hit);
+static int	render_ray_check(const t_scene *const scene,
+				struct s_rayhelper *const info, t_rayhit *const hit);
 static void	fill_rayhelper(struct s_rayhelper *helper,
 				t_vec2f pos, t_vec2f dir);
 
 //the value returned in hit_positon is the horizontal position inside the wall
-t_rayhit	cast_render_ray(t_scene *const scene,
+t_rayhit	cast_render_ray(const t_scene *const scene,
 				const t_vec2f pos, const t_vec2f dir)
 {
 	t_rayhit			hit;
@@ -66,7 +78,7 @@ static void	fill_rayhelper(struct s_rayhelper *const helper,
 	}
 }
 
-static void	render_ray_step(struct s_rayhelper *info, t_rayhit *hit)
+static void	render_ray_step(struct s_rayhelper *const info, t_rayhit *const hit)
 {
 	if (info->length.x < info->length.y)
 	{
@@ -88,8 +100,8 @@ static void	render_ray_step(struct s_rayhelper *info, t_rayhit *hit)
 	}
 }
 
-static int	check_door(t_entity *entity,
-					struct s_rayhelper *info, t_rayhit *hit)
+static int	check_door(const t_entity *const entity,
+					struct s_rayhelper *const info, t_rayhit *const hit)
 {
 	float	temp;
 
@@ -109,10 +121,10 @@ static int	check_door(t_entity *entity,
 	return (1);
 }
 
-static int	render_ray_check(t_scene *scene,
-				struct s_rayhelper *info, t_rayhit *hit)
+static int	render_ray_check(const t_scene *const scene,
+				struct s_rayhelper *const info, t_rayhit *const hit)
 {
-	t_entity	*entity;
+	const t_entity	*entity;
 
 	if (scene->map[info->map_pos.x][info->map_pos.y] == 0)
 		return (0);
@@ -121,8 +133,6 @@ static int	render_ray_check(t_scene *scene,
 	entity = scene->entities
 		+ (scene->map[info->map_pos.x][info->map_pos.y] >> 2);
 	if (entity->type == DOOR && !entity->enabled)
-	{
 		return (check_door(entity, info, hit));
-	}
 	return (0);
 }

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   render.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: edgribei <edgribei@student.42porto.com>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/22 18:29:05 by edgribei          #+#    #+#             */
+/*   Updated: 2025/12/22 18:29:06 by edgribei         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <libft.h>
 #include <cub3d/raycast.h>
 #include <cub3d/vector.h>
@@ -53,8 +65,8 @@ static void	clear_screen(const t_scene *const scene, t_img *const buffer)
 	}
 }
 
-static void	render_column_loop(t_scene *scene,
-							t_img *buffer, int col, t_rayhit hit)
+static void	render_column_loop(const t_scene *const scene,
+							t_img *const buffer, const int col, t_rayhit hit)
 {
 	const float	dist_mult = 1
 		/ (3 + ft_clampf(5 * (hit.proj_dist - 1), 1, 255));
@@ -83,13 +95,8 @@ static void	render_column_loop(t_scene *scene,
 	}
 }
 
-//height = buffer->height / dist
-//start = buffer->height / 2 - height / 2
-//end = min(start + height, buffer->height) - i;
-//i = max(0, start)
-//i < height && i + start < buffer->height
-//place at start + i with texture coord i/height using uv coords
-static void	render_column(t_scene *scene, t_data *data, t_vec2f dir, int col)
+static void	render_column(const t_scene *const scene, t_data *const data,
+						const t_vec2f dir, const int col)
 {
 	const t_rayhit	hit = cast_render_ray(scene, scene->player.pos, dir);
 
@@ -97,7 +104,7 @@ static void	render_column(t_scene *scene, t_data *data, t_vec2f dir, int col)
 	render_column_loop(scene, data->buffer, col, hit);
 }
 
-void	render_camera(t_scene *scene, t_data *data)
+void	render_camera(const t_scene *const scene, t_data *const data)
 {
 	const int		width = data->buffer->width;
 	const t_vec2f	step

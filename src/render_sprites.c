@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   render_sprites.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: edgribei <edgribei@student.42porto.com>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/22 18:29:16 by edgribei          #+#    #+#             */
+/*   Updated: 2025/12/22 18:29:18 by edgribei         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <cub3d/vector.h>
 #include <cub3d/defines.h>
 #include <cub3d/types.h>
@@ -70,8 +82,9 @@ static void	fill_sprite_entities(const t_scene *const scene,
 	}
 }
 
-static void	render_sprite(t_entity *entity,
-				t_player *player, t_data *data, int animation_frame)
+static void	render_sprite(const t_entity *const entity,
+				const t_player *const player, t_data *const data,
+				const int animation_frame)
 {
 	const t_vec2f	proj
 		= world_to_camera(player,
@@ -93,7 +106,7 @@ static void	render_sprite(t_entity *entity,
 	}
 }
 
-void	render_sprites(t_scene *scene, t_data *data)
+void	render_sprites(const t_scene *const scene, t_data *const data)
 {
 	static bool		filled = false;
 	static int		entity_order[ENTITY_MAX];
