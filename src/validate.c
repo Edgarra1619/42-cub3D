@@ -19,7 +19,7 @@ int	validate_map(const t_scene *const scene)
 {
 	if (scene->map_size.x == 0 || scene->map_size.y == 0)
 		return (print_error(SECT_INIT, ERR_MAP_EMPTY));
-	if (scene->player.pos.x == -1.0f)
+	if (scene->player.pos.x == 0)
 		return (print_error(SECT_INIT, ERR_NO_SPAWN));
 	if (check_map_seal(scene))
 		return (print_error(SECT_INIT, ERR_MAP_SEAL));
