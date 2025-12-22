@@ -105,7 +105,8 @@ static t_vec2f	world_to_camera(t_player *player, t_vec2f pos)
 		};
 }
 
-static void	render_sprite(t_entity *entity, t_player *player, t_data *data)
+static void	render_sprite(t_entity *entity,
+				t_player *player, t_data *data, int animation_frame)
 {
 	const t_vec2f	proj =
 		world_to_camera(player, (t_vec2f){entity->pos.x, entity->pos.y });
@@ -121,7 +122,7 @@ static void	render_sprite(t_entity *entity, t_player *player, t_data *data)
 	{
 		if (proj.y < data->zbuffer[start + i])
 			render_column_loop(data,
-					data->scene.textures[KEY_TEX]->height * ((data->current_animation_frame % 8) + ((float) i / size)), start + i, proj.y);
+					data->scene.textures[KEY_TEX]->height * (animation_frame + ((float) i / size)), start + i, proj.y);
 		i--;
 	}
 	//((int*)data->buffer->data)[pos] = RED;
@@ -145,6 +146,9 @@ void	render_sprites(t_scene *scene, t_data *data)
 	{
 		if (scene->entities[entity_order[i]].enabled)
 			continue;
-		render_sprite(&scene->entities[entity_order[i]], &scene->player, data);
+		render_sprite(&scene->entities[entity_order[i]], &scene->player, data,
+			data->current_animation_frame %
+				(scene->textures[KEY_TEX]->width
+					/ scene->textures[KEY_TEX]->height));
 	}
 }
