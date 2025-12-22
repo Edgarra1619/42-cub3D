@@ -1,7 +1,7 @@
 NAME = cub3D
 SRCS =  main.c vector.c vector_float.c error.c init.c parse.c parse_prop.c
 SRCS += parse_map.c read.c validate.c loop.c input.c collision.c player.c
-SRCS += entity.c render.c render_utils.c minimap.c raycast.c
+SRCS += entity.c render.c render_utils.c render_sprites.c minimap.c raycast.c
 INCDIR = ./include/
 SRCDIR = ./src/
 OBJDIR = ./obj/
@@ -12,9 +12,9 @@ TESTARGS = ./maps/test.cub
 CC = clang
 CFLAGS = -Wall -Wextra -gdwarf-4 -O0 $(INCFLAGS) -D MINIMAP_SIZE=10
 INCFLAGS = -I $(INCDIR) -I $(LFTDIR)/include/ -I $(MLXDIR)
-MLXFLAGS = -lXext -lX11
+MLXFLAGS = -lXext -lX11 -lXfixes
 
-VALGFLAGS = 
+VALGFLAGS = --leak-check=full --show-leak-kinds=all
 
 OBJS = $(patsubst %.c, $(OBJDIR)%.o, $(SRCS))
 LFT = $(LFTDIR)/libft.a

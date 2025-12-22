@@ -4,8 +4,6 @@
 #include <cub3d/types.h>
 #include <cub3d/render.h>
 
-#include <math.h>
-
 static void	clear_screen(t_scene *scene, t_img *buffer)
 {
 	const t_vec2	buff_size = (t_vec2) {buffer->width, buffer->height};
@@ -91,12 +89,12 @@ void	render_camera(t_scene *scene, t_data *data)
 {
 	const int		width = data->buffer->width;
 	const t_vec2f	step =
-		mult_vec2ff(rot_vec2ff(scene->player.dir, M_PI_2), (float) 1 / (width));
+		mult_vec2ff(scene->player.cam_plane, (float) 1 / (width));
 	t_vec2f			dir;
 	int				i;
 
 	clear_screen(scene, data->buffer);
-	dir = sum_vec2f(scene->player.dir, mult_vec2ff(step, (float) - width / 2));
+	dir = sum_vec2f(scene->player.dir, mult_vec2ff(scene->player.cam_plane, -1 / 2.0));
 	i = 0;
 	while (i < width)
 	{
@@ -104,4 +102,5 @@ void	render_camera(t_scene *scene, t_data *data)
 		dir = sum_vec2f(dir, step);
 		i++;
 	}
+	render_sprites(scene, data);
 }

@@ -1,3 +1,5 @@
+#include "cub3d/defines.h"
+#include <cub3d/vector.h>
 #include <cub3d/cub3d.h>
 #include <cub3d/game.h>
 #include <cub3d/render.h>
@@ -7,6 +9,7 @@
 #include <mlx.h>
 
 #include <sys/time.h>
+#include <math.h>
 
 static void		game_loop(t_data *data);
 static void		render_loop(t_data *data);
@@ -23,6 +26,7 @@ static void	render_loop(t_data *const data)
 {
 	static char	keys_str[64] = "keys: ";
 
+	data->scene.player.cam_plane = mult_vec2ff(rot_vec2ff(data->scene.player.dir, M_PI_2), (float) WINDOW_WIDTH / WINDOW_HEIGHT);
 	ft_bzero(data->minimap.buffer->data, sizeof(int)
 		* data->minimap.buffer->width * data->minimap.buffer->height);
 	render_camera(&data->scene, data);
@@ -40,6 +44,9 @@ static void	game_loop(t_data *const data)
 	const int	mouse_mov = update_mouse(data);
 	const int	keys_held = data->scene.player.keys_held;
 
+	data->extra_frame_time += delta;
+	data->current_animation_frame += data->extra_frame_time / 125;
+	data->extra_frame_time %= 125;
 	if (mouse_mov)
 		update_player_dir_mouse(&data->scene.player, mouse_mov);
 	if (keys_held & (KEYCODELEFT | KEYCODERIGHT))
@@ -49,6 +56,7 @@ static void	game_loop(t_data *const data)
 	update_entities(&data->scene, delta);
 }
 
+//milisecond
 static float	get_delta(void)
 {
 	static struct timeval	last_tv;

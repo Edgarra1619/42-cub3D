@@ -26,7 +26,7 @@ typedef struct s_entity
 	enum e_entity	type;
 	t_vec2			pos;
 	bool			vert;
-	bool			open;
+	bool			enabled;
 	bool			unlocked;
 	float			lock_time;
 }	t_entity;
@@ -35,6 +35,7 @@ typedef struct s_player
 {
 	t_vec2f	pos;
 	t_vec2f	dir;
+	t_vec2f	cam_plane;
 	int		key_count;
 	int		keys_held;
 }	t_player;
@@ -66,6 +67,8 @@ typedef struct s_data
 	float		zbuffer[WINDOW_WIDTH];
 	t_scene		scene;
 	t_minimap	minimap;
+	int			extra_frame_time;
+	int			current_animation_frame;
 }	t_data;
 
 #endif

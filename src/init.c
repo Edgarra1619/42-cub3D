@@ -7,6 +7,7 @@
 #include <libft.h>
 
 #include <mlx.h>
+#include <X11/extensions/Xfixes.h>
 
 #include <errno.h>
 
@@ -23,6 +24,8 @@ int	init(t_data *const data, const char *const file)
 		|| init_window(data));
 }
 
+//	XFixesHideCursor(data->display->display, data->window->window);
+//	mlx_mouse_hide(data->display, data->window);
 static int	init_window(t_data *const data)
 {
 	data->window
@@ -43,7 +46,6 @@ static int	init_window(t_data *const data)
 	mlx_loop_hook(data->display, loop, data);
 	mlx_mouse_move(data->display, data->window,
 		WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
-	mlx_mouse_hide(data->display, data->window);
 	return (0);
 }
 

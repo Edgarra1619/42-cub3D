@@ -20,12 +20,12 @@ void	update_entities(t_scene *const scene, const float delta)
 		i++;
 		if (entity->type == DOOR)
 		{
-			if (!entity->open)
+			if (!entity->enabled)
 				continue ;
 			if (entity->lock_time > delta)
 				entity->lock_time -= delta;
 			else
-				entity->open = false;
+				entity->enabled = false;
 		}
 	}
 }
@@ -40,20 +40,21 @@ static void	handle_entity_coll(
 	entity = scene->entities + (scene->map[cell.x][cell.y] >> 2);
 	if (entity->type == KEY)
 	{
+		entity->enabled = true;
 		scene->map[entity->pos.x][entity->pos.y] = SPACE;
 		scene->player.key_count++;
 	}
 	else if (entity->type == DOOR)
 	{
 		if (entity->unlocked)
-			entity->open = true;
+			entity->enabled = true;
 		else if (scene->player.key_count > 0)
 		{
 			entity->unlocked = true;
-			entity->open = true;
+			entity->enabled = true;
 			scene->player.key_count--;
 		}
-		if (entity->open)
+		if (entity->enabled)
 			entity->lock_time = 2000;
 	}
 }

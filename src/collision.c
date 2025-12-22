@@ -30,7 +30,7 @@ int	check_cell_coll(
 	if (type == ENTITY)
 	{
 		entity = scene->entities + (cell_data >> 2);
-		if (entity->type == DOOR && !entity->open)
+		if (entity->type == DOOR && !entity->enabled)
 			return (check_box_coll(box, get_cell_box(cell, 0.25f)));
 	}
 	return (0);
