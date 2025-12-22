@@ -2,19 +2,20 @@
 # define RAYCAST_H
 # include <cub3d/vector.h>
 
+enum	e_side
+{
+	NORTH,
+	EAST,
+	SOUTH,
+	WEST,
+};
 
 typedef struct s_raycast_result
 {
-	t_vec2f	hit_position;
-	enum
-	{
-		NORTH,
-		EAST,
-		SOUTH,
-		WEST,
-	} side_hit;
-	float	projDist;
-} t_rayhit;
+	t_vec2f		hit_position;
+	enum e_side	side_hit;
+	float		proj_dist;
+}	t_rayhit;
 
 struct s_rayhelper
 {

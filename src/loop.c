@@ -25,8 +25,11 @@ int	loop(t_data *const data)
 static void	render_loop(t_data *const data)
 {
 	static char	keys_str[64] = "keys: ";
+	t_vec2f		cam_plane;
 
-	data->scene.player.cam_plane = mult_vec2ff(rot_vec2ff(data->scene.player.dir, M_PI_2), (float) WINDOW_WIDTH / WINDOW_HEIGHT);
+	cam_plane = rot_vec2ff(data->scene.player.dir, M_PI_2);
+	cam_plane = mult_vec2ff(cam_plane, (float) WINDOW_WIDTH / WINDOW_HEIGHT);
+	data->scene.player.cam_plane = cam_plane;
 	ft_bzero(data->minimap.buffer->data, sizeof(int)
 		* data->minimap.buffer->width * data->minimap.buffer->height);
 	render_camera(&data->scene, data);
