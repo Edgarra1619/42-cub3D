@@ -1,40 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raycast.h                                          :+:      :+:    :+:   */
+/*   sort_sprites.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: edgribei <edgribei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/22 18:13:10 by edgribei          #+#    #+#             */
-/*   Updated: 2025/12/22 18:13:12 by edgribei         ###   ########.fr       */
+/*   Created: 2025/12/22 18:29:39 by edgribei          #+#    #+#             */
+/*   Updated: 2025/12/22 18:29:40 by edgribei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RAYCAST_H
-# define RAYCAST_H
-# include <cub3d/vector.h>
-
-enum	e_side
+void	sort_sprites(int *const order,
+				const float *const distance, const int count)
 {
-	NORTH,
-	EAST,
-	SOUTH,
-	WEST,
-};
+	int	i;
+	int	j;
+	int	tmp;
 
-typedef struct s_raycast_result
-{
-	t_vec2f		hit_position;
-	enum e_side	side_hit;
-	float		proj_dist;
-}	t_rayhit;
-
-struct s_rayhelper
-{
-	t_vec2	map_pos;
-	t_vec2	map_step;
-	t_vec2f	length_step;
-	t_vec2f	length;
-};
-
-#endif
+	i = 0;
+	while (i < count - 1)
+	{
+		j = i;
+		while (j < count - 1)
+		{
+			if (distance[order[j]] > distance[order[j + 1]])
+			{
+				tmp = order[j];
+				order[j] = order[j + 1];
+				order[j + 1] = tmp;
+			}
+			j++;
+		}
+		i++;
+	}
+}

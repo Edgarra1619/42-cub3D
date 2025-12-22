@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vde-albu <vde-albu@student.42porto.com>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/22 18:37:39 by vde-albu          #+#    #+#             */
+/*   Updated: 2025/12/22 18:37:47 by vde-albu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PARSE_H
 # define PARSE_H
 
 # include <cub3d/types.h>
 
-# define PROP_SIZE	3
-# define COLOR_SIZE	12
+# define PROP_SIZE 3
+# define COLOR_SIZE 12
 
 enum e_prop
 {

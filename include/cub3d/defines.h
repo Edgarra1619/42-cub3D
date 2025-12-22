@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   defines.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vde-albu <vde-albu@student.42porto.com>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/22 18:36:09 by vde-albu          #+#    #+#             */
+/*   Updated: 2025/12/22 18:37:20 by vde-albu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef DEFINES_H
 # define DEFINES_H
 
@@ -8,19 +20,18 @@
 #  define WINDOW_HEIGHT 720
 # endif
 # ifndef READ_SIZE
-#  define READ_SIZE		1024
+#  define READ_SIZE 1024
 # endif
 # ifndef ERROR_MAX
-#  define ERROR_MAX		1024
+#  define ERROR_MAX 1024
 # endif
 # ifndef MAP_MAX
-#  define MAP_MAX		1024
+#  define MAP_MAX 1024
 # endif
 # ifndef ENTITY_MAX
-#  define ENTITY_MAX	64
+#  define ENTITY_MAX 64
 # endif
 
-// INFO: here for testing purposes
 enum	e_std_colors
 {
 	RED = 0xFFFF0000,
