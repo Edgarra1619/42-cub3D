@@ -18,7 +18,7 @@ static int		validate_target_pos(t_vec2f pos, const t_scene *scene);
 
 void	update_player_dir(t_player *const player, const float delta)
 {
-	static const float	speed = 0.002f;
+	static const float	speed = 0.0025f;
 	const int			keys_held = player->keys_held;
 	float				theta;
 
@@ -39,8 +39,8 @@ void	update_player_dir_mouse(t_player *const player, const int mouse_mov)
 
 void	update_player_pos(t_scene *const scene, float delta)
 {
-	static const float	delta_cap = 1000 / 60.0f;
-	static const float	speed = 0.003f;
+	static const float	delta_cap = 1000 / 30.0f;
+	static const float	speed = 0.002f;
 	const t_vec2f		pos = scene->player.pos;
 	const t_vec2f		target_dir = get_target_dir(&scene->player);
 	t_vec2f				target_pos;

@@ -8,10 +8,10 @@ SRCDIR = ./src/
 OBJDIR = ./obj/
 LFTDIR = ./libft/
 MLXDIR = ./minilibx/
-TESTARGS = ./maps/test.cub
+TESTARGS = scenes/example.cub
 
-CC = clang
-CFLAGS = -Wall -Wextra -gdwarf-4 -O0 $(INCFLAGS) -D MINIMAP_SIZE=10
+CC = cc
+CFLAGS = -Wall -Wextra -Werror -O3 $(INCFLAGS)
 INCFLAGS = -I $(INCDIR) -I $(LFTDIR)/include/ -I $(MLXDIR)
 MLXFLAGS = -lXext -lX11 -lXfixes
 
