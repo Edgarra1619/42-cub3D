@@ -26,7 +26,7 @@ static void	clear_upper_screen(const t_scene *const scene, t_img *const buffer)
 	i.y = 0;
 	while (i.y < buff_size.y / 2)
 	{
-		color = scene->colors[0];
+		color = scene->colors[CEILING_COL];
 		dist_mult = 1.0 / (3 + ft_clampf(5 * ((float)(buffer->height / 2.0)
 						/ (buffer->height / 2.0 - i.y) - 1), 1, 255));
 		color.r = color.r * dist_mult;
@@ -51,7 +51,7 @@ static void	clear_screen(const t_scene *const scene, t_img *const buffer)
 	i.y = buff_size.y;
 	while (i.y > buff_size.y / 2)
 	{
-		color = scene->colors[1];
+		color = scene->colors[FLOOR_COL];
 		dist_mult = 1 / (3 + ft_clampf(5 * ((float)(buffer->height / 2.0)
 						/ (i.y - buffer->height / 2.0) - 1), 1, 255));
 		color.r = color.r * dist_mult;
